@@ -1,0 +1,6 @@
+com\lukasz\engineerproject\app4train\utils\StringUtils.class
+com\lukasz\engineerproject\app4train\utils\Gender.class
+com\lukasz\engineerproject\app4train\utils\NotificationMessages.class
+com\lukasz\engineerproject\app4train\utils\UtilsForExcercisesTitles.class
+com\lukasz\engineerproject\app4train\utils\UtilsForNutritionalAdvicesTitles.class
+com\lukasz\engineerproject\app4train\utils\UtilsForArticlesTitles.class

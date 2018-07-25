@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.lukasz.engineerproject.app4train</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<artifactId>app4train</artifactId>
+	</parent>
+	<artifactId>app4train-ui</artifactId>
+	<name>app4train-ui</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.3.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-spring</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lukasz.engineerproject.app4train</groupId>
+			<artifactId>app4train-utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lukasz.engineerproject.app4train</groupId>
+			<artifactId>app4train-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lukasz.engineerproject.app4train</groupId>
+			<artifactId>app4train-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		  <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-themes</artifactId>
+            <version>8.4.0</version>
+        </dependency> 
+        
+       <!--  //////////////////// -->
+       
+	</dependencies>
+	 <build>
+		<plugins>
+			<plugin>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<!-- Widgetset goals for add-ons, including eclanspace-addon -->
+							<goal>update-widgetset</goal>
+							<goal>compile</goal>
+
+							<goal>update-theme</goal>
+							<!-- Comment out compile-theme goal to use on-the-fly theme compilation -->
+							<goal>compile-theme</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		
+			<!-- <plugin>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>clean</goal>
+							<goal>resources</goal>
+							<goal>update-theme</goal>
+							<goal>update-widgetset</goal>
+							<goal>compile-theme</goal>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
+		</plugins>
+	
+	 <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>app4train-ui/src/main/webapp</directory>
+            </resource>
+        </resources>
+	</build> 
+
+</project>

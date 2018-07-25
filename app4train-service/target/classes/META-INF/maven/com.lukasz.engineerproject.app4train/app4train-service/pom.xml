@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.lukasz.engineerproject.app4train</groupId>
+    <artifactId>app4train</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>app4train-service</artifactId>
+  <name>app4train-service</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.lukasz.engineerproject.app4train</groupId>
+  		<artifactId>app4train-model</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.lukasz.engineerproject.app4train</groupId>
+  		<artifactId>app4train-repository</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
+</project>

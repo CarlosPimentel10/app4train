@@ -1,0 +1,114 @@
+package com.lukasz.engineerproject.app4train.utils;
+
+public enum StringUtils {
+
+	ADD_USER("DODAJ UØYTKOWINKA"), 
+	SHOW_ALL_USERS("POKAØ WSZYSTKICH UØYTKOWNIK”W"), 
+	FIRST_NAME("Imie"), 
+	LAST_NAME("Nazwisko"),
+	AGE("Wiek"),
+	TRAINIG_PLAN("Plan Treningowy"),
+	GENDER("P≥eÊ"), 
+	SAVE("Zapisz"),
+	CANCEL("Anuluj"),
+	REMOVE_USER("UsuÒ"),
+	REMOVE_BASIC_METABOLIC_RATE("UsuÒ"),
+	REMOVE_BODY_ADIPOSITY_INDEX("UsuÒ"),
+	REMOVE_BODY_MASS_INDEX("UsuÒ"),
+	REMOVE_CALORIC_DEMAND_RATE("UsuÒ"),
+	WEIGHT("Podaj wagÍ (kg)"),
+	GROWTH("Podaj wzrost (cm)"),
+	USER("Uøytkownik"),
+	CALCULATE("Oblicz"),
+	RESULT("Wynik"),
+	HIP_CIRCUMFERENCE("Podaj obwÛd bioder (cm)"),
+	DRY_MUSCLE_WEIGHT("Podaj suchπ wagÍ miÍúni (kg)"),
+	USER_NAME("Nazwa uøytkownika"),
+	USER_EMAIL("Adres e-mail"),
+	TOPIC("Temat"),
+	USER_PHONE_NUMBER("Telefon kontaktowy"),
+	SEND_MESSAGE("Wyúlij wiadomoúÊ"),
+	RETURN_TO_MAIN("Anuluj"),
+	ECTOMORPHIC("EKTOMORFIK"),
+	MESOMORPHIC("MEZOMORFIK"),
+	ENDOMORPHIC("ENDOMORFIK"),
+	CALCULATE_CALORIC_DEMAND("Oblicz zapotrzebowanie"),
+	MENU_BODY_TYPE("TYPY BUDOWY CIA£A"),
+	
+	MENU_USER("UØYTKOWNICY"),
+	MENU_TRAINING_PLANS("PLANY TRENINGOWE"),
+	MENU_LOGOUT("WYLOGUJ"),
+	MENU_ADD_USER("Dodaj uøytkownika"),
+	MENU_REMOVE_USER("UsuÒ uøytkownika"),
+	MENU_TRAINING_PLANS_FOR_MAN_EXAMPLE_ONE("Dla mÍøczyzn - przyk≥ad 1"),
+	MENU_TRAINING_PLANS_FOR_MAN_EXAMPLE_TWO("Dla mÍøczyzn - przyk≥ad 2"),
+	MENU_TRAINING_PLANS_FOR_MAN_EXAMPLE_THREE("Dla mÍøczyzn - przyk≥ad 3"),
+	MENU_TRAINING_PLANS_FOR_WOMAN_EXAMPLE_ONE("Dla kobiet - przyk≥ad 1"),
+	MENU_TRAINING_PLANS_FOR_WOMAN_EXAMPLE_TWO("Dla kobiet - przyk≥ad 2"),
+	MENU_TRAINING_PLANS_FOR_WOMAN_EXAMPLE_THREE("Dla kobiet - przyk≥ad 3"),
+	MENU_LOGOUT_LABEL("Wyloguj"), 
+	
+	MENU_CALCULATE_BMI("OBLICZ BMI"),
+	MENU_SHOW_ALL_CALCULATED_BMI("WYåWIETL OBLICZONE BMI"),
+	
+	MENU_CALCULATE_BAI("OBLICZ BAI"),
+	MENU_SHOW_ALL_CALCULATED_BAI("WYåWIETL OBLICZONE BAI"),
+	
+	MENU_CALCULATE_BMR("OBLICZ BMR"),
+	MENU_SHOW_ALL_CALCULATED_BMR("WYåWIETL OBLICZONE BMR"),
+	
+	MENU_BODY_MASS_INDEX("WSKAèNIK MASY CIA£A (BMI)"),
+	MENU_BODY_MASS_INDEX_EXPALATION("Co to jest BMI?"),
+	MENU_BODY_MASS_INDEX_DELETE("UsuÒ obliczone BMI"),
+	MENU_BODY_MASS_INDEX_CALCULATE("Oblicz BMI"),
+	
+	MENU_BASIC_METABOLIC_RATE("PODSTAWOWA PRZEMIANA MATERII (BMR)"),
+	MENU_BASIC_METABOLIC_RATE_EXPALATION("Co to jest BMR?"),
+	MENU_BASIC_METABOLIC_RATE_DELETE("UsuÒ obliczone BMR"),
+	MENU_BASIC_METABOLIC_RATE_CALCULATE("Oblicz BMR"),
+	
+	MENU_BODY_ADIPOSITY_INDEX("WSKAèNIK OT£USZCZENIA CIA£A (BAI)"),
+	MENU_BODY_ADIPOSITY_INDEX_EXPALATION("Co to jest BAI?"),
+	MENU_BODY_ADIPOSITY_INDEX_DELETE("UsuÒ obliczone BAI"),
+	MENU_BODY_ADIPOSITY_INDEX_CALCULATE("Oblicz BAI"),
+	
+	MENU_ADVICES("PORADY ØYWIENIOWE"),
+	MENU_ADVICES_CHECK("Wyúwietl porady øywieniowe"),
+	
+	MENU_ARTICLES("PRZYDATNE ARTYKU£Y"),
+	MENU_ARTICLES_CHECK("Wyúwietl artyku≥y"),
+	
+	MENU_CONTACT("KONTAKT"),
+	MENU_CONTACT_CHECK("Wyúwietl kontakt"),
+	
+	MENU_EXCERCISES("PRZYK£ADOWE ∆WICZENIA"),  
+	MENU_EXCERCISES_CHECK("Wyúwietl Êwiczenia"),
+	
+	MENU_BODY_TYPE_CHECK("Sprawdü typy budowy cia≥a"),
+	
+	LOGIN_PANEL_TITLE("Logowanie"),
+	LOGIN_USER_NAME("Login"),
+	LOGIN_USER_PASSWORD("Has≥o"),
+	LOGIN_LOG_IN("Zaloguj"),
+	LOGIN_REGISTER("Zarejestruj"),
+	
+	SING_UP_PANEL_TITLE("Rejestracja"),
+	SING_UP_USER_LOGIN("Login"),
+	SING_UP_USER_PASSWORD("Has≥o"),
+	SING_UP_USE_PASSWORD_AGAIN("PowtÛrz has≥o"),
+	SING_UP_SAVE("Zapisz"),
+	
+	MENU_ADD_CALORIC_DEMAND("Dodaj zapotrzebowanie"),
+	MENU_SHOW_CALORIC_DEMAND("Pokaø obliczone zapotrzebowania"),
+	;
+	
+	private final String string;
+	
+	private StringUtils(String string) {
+		this.string = string;
+	}
+
+	public String getString() {
+		return string;
+	}
+}

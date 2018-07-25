@@ -1,0 +1,8 @@
+com\lukasz\engineerproject\app4train\model\entity\CaloricDemandForMesomorphicType.class
+com\lukasz\engineerproject\app4train\model\entity\CaloricDemandForEctomorphicType.class
+com\lukasz\engineerproject\app4train\model\entity\User.class
+com\lukasz\engineerproject\app4train\model\entity\BodyAdiposityIndex.class
+com\lukasz\engineerproject\app4train\model\entity\CaloricDemandForEndomorphicType.class
+com\lukasz\engineerproject\app4train\model\entity\BasicMetabolicRate.class
+com\lukasz\engineerproject\app4train\model\entity\BodyMassIndex.class
+com\lukasz\engineerproject\app4train\model\entity\UserForRegistration.class

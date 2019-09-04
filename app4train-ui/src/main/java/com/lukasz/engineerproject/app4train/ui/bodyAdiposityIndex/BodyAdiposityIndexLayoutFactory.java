@@ -1,7 +1,5 @@
 package com.lukasz.engineerproject.app4train.ui.bodyAdiposityIndex;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.lukasz.engineerproject.app4train.ui.commons.App4TrainMainUI;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
 import com.vaadin.navigator.View;
@@ -17,19 +15,21 @@ import com.vaadin.ui.TabSheet.Tab;
 public class BodyAdiposityIndexLayoutFactory extends VerticalLayout implements View, BodyAdiposityIndexSavedListener {
 
 	public static final String NAME = "obliczbai";
-	private TabSheet tabSheet;
 
-	@Autowired
-	private CalculateBodyAdiposityIndexLayoutFactory addBodyAdiposityIndexFactory;
+	private final CalculateBodyAdiposityIndexLayoutFactory addBodyAdiposityIndexFactory;
+	private final ShowAllCalculatedBodyAdiposityIndexLayoutFactory showBodyAdiposityIndexFactory;
 
-	@Autowired
-	private ShowAllCalculatedBodyAdiposityIndexLayoutFactory showBodyAdiposityIndexFactory;
+	public BodyAdiposityIndexLayoutFactory(
+			CalculateBodyAdiposityIndexLayoutFactory addBodyAdiposityIndexFactory,
+			ShowAllCalculatedBodyAdiposityIndexLayoutFactory showBodyAdiposityIndexFactory) {
+		this.addBodyAdiposityIndexFactory = addBodyAdiposityIndexFactory;
+		this.showBodyAdiposityIndexFactory = showBodyAdiposityIndexFactory;
+	}
 
 	private void addLayout() {
 
-		// setMargin(true);
 		setMargin(false);
-		tabSheet = new TabSheet();
+		TabSheet tabSheet = new TabSheet();
 		tabSheet.setWidth("100%");
 
 		Component addBodyAdiposityIndexTab = addBodyAdiposityIndexFactory.createComponent(this);

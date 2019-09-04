@@ -4,7 +4,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.lukasz.engineerproject.app4train.service.emailSender.GmailSender;
+import com.lukasz.engineerproject.app4train.service.emailSender.EmailSenderService;
 import com.lukasz.engineerproject.app4train.utils.NotificationMessages;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
 import com.vaadin.server.FontAwesome;
@@ -23,6 +23,12 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @Component
 public class FormMessageForMailLayoutFactory {
+
+	private final EmailSenderService sender;
+
+	public FormMessageForMailLayoutFactory(EmailSenderService sender) {
+		this.sender = sender;
+	}
 
 	private class AddMessageForMailLayout extends VerticalLayout {
 
@@ -43,18 +49,34 @@ public class FormMessageForMailLayoutFactory {
 			userPhoneNumber = new TextField(StringUtils.USER_PHONE_NUMBER.getString());
 			message = new TextArea();
 
+			clearContentOfTextFields();
+
+			message.setWidth("100%");
+
+			prepareSendButton();
+
+			sendButtonAction();
+
+			formLayoutForMessageContent = new FormLayout();
+			return this;
+		}
+
+		private void clearContentOfTextFields() {
 			userName.setNullRepresentation("");
 			userEmail.setNullRepresentation("");
 			topic.setNullRepresentation("");
 			userPhoneNumber.setNullRepresentation("");
 			message.setNullRepresentation("");
+		}
 
-			message.setWidth("100%");
-
+		private void prepareSendButton() {
 			sendButton = new Button(StringUtils.SEND_MESSAGE.getString());
 			sendButton.setIcon(FontAwesome.SAVE);
 			sendButton.addStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT);
+			sendButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+		}
 
+		private void sendButtonAction() {
 			sendButton.addClickListener(new ClickListener() {
 
 				public void buttonClick(ClickEvent event) {
@@ -112,34 +134,32 @@ public class FormMessageForMailLayoutFactory {
 					topic.clear();
 					userPhoneNumber.clear();
 					message.clear();
-					return;
 				}
 
 			});
-			sendButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-
-			formLayoutForMessageContent = new FormLayout();
-			return this;
 		}
 
 		public com.vaadin.ui.Component layout() {
 
 			setMargin(true);
-			VerticalLayout verticalLayoutForHorizontalLayout = new VerticalLayout();
+
 			HorizontalLayout horizontalLayoutForFirstRow = new HorizontalLayout(userName, userEmail);
 			horizontalLayoutForFirstRow.setSpacing(true);
 			HorizontalLayout horizontalLayoutForSecondRow = new HorizontalLayout(topic, userPhoneNumber);
 			horizontalLayoutForSecondRow.setSpacing(true);
+
+			VerticalLayout verticalLayoutForHorizontalLayout = new VerticalLayout();
 			verticalLayoutForHorizontalLayout.addComponents(horizontalLayoutForFirstRow, horizontalLayoutForSecondRow,
 					message, sendButton);
 			verticalLayoutForHorizontalLayout.setSpacing(true);
 			verticalLayoutForHorizontalLayout.setSizeUndefined();
+
 			formLayoutForMessageContent.addComponent(verticalLayoutForHorizontalLayout);
 			formLayoutForMessageContent.setSizeUndefined();
 			formLayoutForMessageContent.setMargin(true);
 
 			addComponent(formLayoutForMessageContent);
-			setComponentAlignment((com.vaadin.ui.Component) formLayoutForMessageContent, Alignment.MIDDLE_CENTER);
+			setComponentAlignment(formLayoutForMessageContent, Alignment.MIDDLE_CENTER);
 			return formLayoutForMessageContent;
 		}
 
@@ -150,9 +170,6 @@ public class FormMessageForMailLayoutFactory {
 			topic.setValue(null);
 		}
 	}
-
-	@Autowired
-	private GmailSender sender;
 
 	public com.vaadin.ui.Component createComponent() {
 		return new AddMessageForMailLayout().init().layout();

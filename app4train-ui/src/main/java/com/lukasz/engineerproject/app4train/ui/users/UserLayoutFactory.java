@@ -1,7 +1,5 @@
 package com.lukasz.engineerproject.app4train.ui.users;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.lukasz.engineerproject.app4train.ui.commons.App4TrainMainUI;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
 import com.vaadin.navigator.View;
@@ -19,11 +17,13 @@ public class UserLayoutFactory extends VerticalLayout implements View, UserSaved
 	public static final String NAME = "dodaju¿ytkownika";
 	private TabSheet tabSheet;
 
-	@Autowired
-	private AddUserMainLayoutFactory mainFactory;
+	private final AddUserMainLayoutFactory mainFactory;
+	private final ShowAllUsersLayoutFactory allUsersFactory;
 
-	@Autowired
-	private ShowAllUsersLayoutFactory allUsersFactory;
+	public UserLayoutFactory(AddUserMainLayoutFactory mainFactory, ShowAllUsersLayoutFactory allUsersFactory) {
+		this.mainFactory = mainFactory;
+		this.allUsersFactory = allUsersFactory;
+	}
 
 	private void addLayout() {
 

@@ -1,6 +1,5 @@
 package com.lukasz.engineerproject.app4train.ui.contact;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import com.lukasz.engineerproject.app4train.ui.commons.App4TrainMainUI;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -14,16 +13,18 @@ import com.vaadin.ui.themes.ValoTheme;
 public class ContactLayoutFactory extends VerticalLayout implements View {
 
 	public static final String NAME = "wyœwietlkontakt";
-	private Label labelForApp4TrainData;
 
-	@Autowired
-	FormMessageForMailLayoutFactory formMessageForMailLayoutFactory;
+	private final FormMessageForMailLayoutFactory formMessageForMailLayoutFactory;
+
+	public ContactLayoutFactory(FormMessageForMailLayoutFactory formMessageForMailLayoutFactory) {
+		this.formMessageForMailLayoutFactory = formMessageForMailLayoutFactory;
+	}
 
 	private void addLayout() {
 
 		setMargin(false);
 
-		labelForApp4TrainData = new Label(
+		Label labelForApp4TrainData = new Label(
 				"<b>app4train Consulting £ukasz Ptaszek </b><br>" + "<b>Telefon kontaktowy</b></b>:  <br>"
 						+ "<b>Adres e-mail</b>: app4train@gmail.com <br><br>"
 						+ "<b>Chcesz siê dowiedzieæ wiêcej? Wyœlij do nas wiadomoœæ, aby uzyskaæ informacje.<b><br>",

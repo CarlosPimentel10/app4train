@@ -1,11 +1,12 @@
 package com.lukasz.engineerproject.app4train.ui.bodyMassIndex;
 
 import java.util.List;
+
+import com.lukasz.engineerproject.app4train.model.domain.BodyMassIndexEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.lukasz.engineerproject.app4train.model.entity.BodyMassIndex;
-import com.lukasz.engineerproject.app4train.model.entity.User;
-import com.lukasz.engineerproject.app4train.service.getBodyMassIndexResult.GetBodyMassIndexResultService;
-import com.lukasz.engineerproject.app4train.service.showUsers.ShowUsersServiceImpl;
+import com.lukasz.engineerproject.app4train.model.domain.UserEntity;
+import com.lukasz.engineerproject.app4train.service.bmi.GetBodyMassIndexResultService;
+import com.lukasz.engineerproject.app4train.service.user.UserServiceImpl.ShowUsersServiceImpl;
 import com.lukasz.engineerproject.app4train.utils.NotificationMessages;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -32,8 +33,8 @@ public class CalculateBodyMassIndexLayoutFactory {
 		private TextField userWeight;
 		private TextField userGrowth;
 		private Button calculateButton;
-		private BeanFieldGroup<BodyMassIndex> fieldGroup;
-		private BodyMassIndex bodyMassIndex;
+		private BeanFieldGroup<BodyMassIndexEntity> fieldGroup;
+		private BodyMassIndexEntity bodyMassIndexEntity;
 		private ComboBox user;
 		private FormLayout formLayout;
 
@@ -41,12 +42,12 @@ public class CalculateBodyMassIndexLayoutFactory {
 
 		public AddBodyMassIndexLayout(BodyMassIndexSavedListener bodyMassIndexSavedListener) {
 			this.bodyMassIndexSavedListener = bodyMassIndexSavedListener;
-			this.bodyMassIndex = new BodyMassIndex();
+			this.bodyMassIndexEntity = new BodyMassIndexEntity();
 		}
 
 		public AddBodyMassIndexLayout init() {
 
-			fieldGroup = new BeanFieldGroup<BodyMassIndex>(BodyMassIndex.class);
+			fieldGroup = new BeanFieldGroup<BodyMassIndexEntity>(BodyMassIndexEntity.class);
 			userWeight = new TextField(StringUtils.WEIGHT.getString());
 			userGrowth = new TextField(StringUtils.GROWTH.getString());
 			user = new ComboBox(StringUtils.USER.getString());
@@ -66,7 +67,7 @@ public class CalculateBodyMassIndexLayoutFactory {
 
 		public AddBodyMassIndexLayout bind() {
 			fieldGroup.bindMemberFields(this);
-			fieldGroup.setItemDataSource(bodyMassIndex);
+			fieldGroup.setItemDataSource(bodyMassIndexEntity);
 
 			return this;
 		}
@@ -113,7 +114,7 @@ public class CalculateBodyMassIndexLayoutFactory {
 				return;
 			}
 
-			getBodyMassIndexResultService.save(bodyMassIndex);
+			getBodyMassIndexResultService.save(bodyMassIndexEntity);
 			bodyMassIndexSavedListener.bodyMassIndexSaved();
 
 			Notification.show(NotificationMessages.BMI_SAVE_SUCCESS_TITLE.getString(),
@@ -124,8 +125,8 @@ public class CalculateBodyMassIndexLayoutFactory {
 
 		public AddBodyMassIndexLayout load() {
 
-			List<User> users = showUsersService.getAllUsers();
-			user.addItems(users);
+			List<UserEntity> userEntities = showUsersService.getAllUsers();
+			user.addItems(userEntities);
 
 			return this;
 		}

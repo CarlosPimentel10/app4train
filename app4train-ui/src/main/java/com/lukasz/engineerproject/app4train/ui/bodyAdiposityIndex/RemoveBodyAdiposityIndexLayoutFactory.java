@@ -1,10 +1,11 @@
 package com.lukasz.engineerproject.app4train.ui.bodyAdiposityIndex;
 
 import java.util.List;
+
+import com.lukasz.engineerproject.app4train.model.domain.BodyAdiposityIndexEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.lukasz.engineerproject.app4train.model.entity.BodyAdiposityIndex;
-import com.lukasz.engineerproject.app4train.service.removeBodyAdiposityIndex.RemoveBodyAdiposityIndexService;
-import com.lukasz.engineerproject.app4train.service.showBodyAdiposityIndexResult.ShowAllBodyAdiposityIndexService;
+import com.lukasz.engineerproject.app4train.service.bai.RemoveBodyAdiposityIndexService;
+import com.lukasz.engineerproject.app4train.service.bai.ShowAllBodyAdiposityIndexService;
 import com.lukasz.engineerproject.app4train.ui.commons.App4TrainMainUI;
 import com.lukasz.engineerproject.app4train.utils.NotificationMessages;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
@@ -34,16 +35,29 @@ public class RemoveBodyAdiposityIndexLayoutFactory extends VerticalLayout implem
 	public static final String NAME = "usuñobliczonebai";
 	private Grid removeBodyAdiposityIndexTable;
 	private Button removeBodyAdiposityIndexButton;
-	private List<BodyAdiposityIndex> bodyAdiposityIndexes;
+	private List<BodyAdiposityIndexEntity> bodyAdiposityIndexEntities;
 
 	private void addLayout() {
 
-		removeBodyAdiposityIndexButton = new Button(StringUtils.REMOVE_BODY_ADIPOSITY_INDEX.getString());
+		prepareButtonToRemoveBodyAdiposityIndex();
 
 		setMargin(true);
-		BeanItemContainer<BodyAdiposityIndex> container = new BeanItemContainer<BodyAdiposityIndex>(
-				BodyAdiposityIndex.class, bodyAdiposityIndexes);
+		BeanItemContainer<BodyAdiposityIndexEntity> container = new BeanItemContainer<BodyAdiposityIndexEntity>(
+				BodyAdiposityIndexEntity.class, bodyAdiposityIndexEntities);
 
+		prepareBodyAdiposityIndexTable(container);
+
+		addComponent(removeBodyAdiposityIndexTable);
+		addComponent(removeBodyAdiposityIndexButton);
+	}
+
+	private void prepareButtonToRemoveBodyAdiposityIndex() {
+		removeBodyAdiposityIndexButton = new Button(StringUtils.REMOVE_BODY_ADIPOSITY_INDEX.getString());
+		removeBodyAdiposityIndexButton.addClickListener(this);
+		removeBodyAdiposityIndexButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+	}
+
+	private void prepareBodyAdiposityIndexTable(BeanItemContainer<BodyAdiposityIndexEntity> container) {
 		removeBodyAdiposityIndexTable = new Grid(container);
 		removeBodyAdiposityIndexTable.setColumnOrder("bodyAdiposityIndexResult", "userGrowth", "hipCircumference",
 				"user");
@@ -55,12 +69,6 @@ public class RemoveBodyAdiposityIndexLayoutFactory extends VerticalLayout implem
 		removeBodyAdiposityIndexTable.setImmediate(true);
 		removeBodyAdiposityIndexTable.setSelectionMode(SelectionMode.MULTI);
 		removeBodyAdiposityIndexTable.setWidth("100%");
-
-		removeBodyAdiposityIndexButton.addClickListener(this);
-		removeBodyAdiposityIndexButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-
-		addComponent(removeBodyAdiposityIndexTable);
-		addComponent(removeBodyAdiposityIndexButton);
 	}
 
 	public void buttonClick(ClickEvent event) {
@@ -68,19 +76,23 @@ public class RemoveBodyAdiposityIndexLayoutFactory extends VerticalLayout implem
 		MultiSelectionModel selectionModel = (MultiSelectionModel) removeBodyAdiposityIndexTable.getSelectionModel();
 
 		for (Object selectedItem : selectionModel.getSelectedRows()) {
-			BodyAdiposityIndex bodyAdiposityIndex = (BodyAdiposityIndex) selectedItem;
-			removeBodyAdiposityIndexTable.getContainerDataSource().removeItem(bodyAdiposityIndex);
-			removeBodyAdiposityIndexService.removeBodyAdiposityIndex(bodyAdiposityIndex);
+			BodyAdiposityIndexEntity bodyAdiposityIndexEntity = (BodyAdiposityIndexEntity) selectedItem;
+			removeBodyAdiposityIndexTable.getContainerDataSource().removeItem(bodyAdiposityIndexEntity);
+			removeBodyAdiposityIndexService.removeBodyAdiposityIndex(bodyAdiposityIndexEntity);
 		}
 
-		Notification.show(NotificationMessages.BODY_ADIPOSITY_INDEX_REMOVE_SUCCESS_TITLE.getString(),
-				NotificationMessages.BODY_ADIPOSITY_INDEX_REMOVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
+		prepareMessage();
 
 		removeBodyAdiposityIndexTable.getSelectionModel().reset();
 	}
 
+	private void prepareMessage() {
+		Notification.show(NotificationMessages.BODY_ADIPOSITY_INDEX_REMOVE_SUCCESS_TITLE.getString(),
+				NotificationMessages.BODY_ADIPOSITY_INDEX_REMOVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
+	}
+
 	private void loadBodyAdiposityIndexes() {
-		bodyAdiposityIndexes = showAllBodyAdiposityIndexService.getAllBodyAdiposityIndex();
+		bodyAdiposityIndexEntities = showAllBodyAdiposityIndexService.getAllBodyAdiposityIndex();
 	}
 
 	public void enter(ViewChangeEvent event) {

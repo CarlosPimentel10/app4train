@@ -1,9 +1,9 @@
 package com.lukasz.engineerproject.app4train.ui.bodyAdiposityIndex;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.lukasz.engineerproject.app4train.model.entity.BodyAdiposityIndex;
-import com.lukasz.engineerproject.app4train.service.showBodyAdiposityIndexResult.ShowAllBodyAdiposityIndexService;
+
+import com.lukasz.engineerproject.app4train.model.domain.BodyAdiposityIndexEntity;
+import com.lukasz.engineerproject.app4train.service.bai.ShowAllBodyAdiposityIndexService;
 import com.lukasz.engineerproject.app4train.ui.views.UIComponentBuilder;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
@@ -24,13 +24,17 @@ import com.vaadin.ui.themes.ValoTheme;
 @org.springframework.stereotype.Component
 public class ShowAllCalculatedBodyAdiposityIndexLayoutFactory implements UIComponentBuilder {
 
-	private List<BodyAdiposityIndex> bodyAdiposityIndex;
-	private BeanItemContainer<BodyAdiposityIndex> container;
+	private List<BodyAdiposityIndexEntity> bodyAdiposityIndexEntities;
+	private BeanItemContainer<BodyAdiposityIndexEntity> container;
 	private Button buttonForWindowOne;
 	private Button buttonForWindowTwo;
 	private Embedded tableBAIforMan;
 	private Embedded tableBAIforWoman;
 	private HorizontalLayout layoutForButtons;
+
+	public ShowAllCalculatedBodyAdiposityIndexLayoutFactory(ShowAllBodyAdiposityIndexService showAllBodyAdiposityIndexService) {
+		this.showAllBodyAdiposityIndexService = showAllBodyAdiposityIndexService;
+	}
 
 	private class ShowBodyAdiposityIndexLayout extends VerticalLayout {
 
@@ -39,38 +43,25 @@ public class ShowAllCalculatedBodyAdiposityIndexLayoutFactory implements UICompo
 		public ShowBodyAdiposityIndexLayout init() {
 
 			setMargin(true);
-			container = new BeanItemContainer<BodyAdiposityIndex>(BodyAdiposityIndex.class, bodyAdiposityIndex);
-			bodyAdiposityIndexTable = new Grid(container);
-			bodyAdiposityIndexTable.setColumnOrder("bodyAdiposityIndexResult", "userGrowth", "hipCircumference");
-			bodyAdiposityIndexTable.getColumn("bodyAdiposityIndexResult").setHeaderCaption("BAI");
-			bodyAdiposityIndexTable.getColumn("userGrowth").setHeaderCaption("Wzrost (cm)");
-			bodyAdiposityIndexTable.getColumn("hipCircumference").setHeaderCaption("Obwód bioder (cm)");
-			bodyAdiposityIndexTable.getColumn("user").setHeaderCaption("U¿ytkownik");
-			bodyAdiposityIndexTable.removeColumn("id");
-			bodyAdiposityIndexTable.setWidth("100%");
-			bodyAdiposityIndexTable.setImmediate(true);
+			container = new BeanItemContainer<BodyAdiposityIndexEntity>(BodyAdiposityIndexEntity.class, bodyAdiposityIndexEntities);
 
-			buttonForWindowOne = new Button("SprawdŸ tabele BAI dla mê¿czyzn");
-			buttonForWindowOne.addClickListener(new ClickListener() {
+			prepareAdiposityIndexTable();
 
-				public void buttonClick(ClickEvent event) {
+			prepareButtonForWindowOne();
 
-					Window window = new Window();
-					window.setModal(true);
+			windowOneButtonAction();
 
-					tableBAIforMan = new Embedded();
-					tableBAIforMan.setSource(new ThemeResource("../../images/tabela_BAI_M.png"));
-					// tableBMI.setWidth( "100%" );
+			prepareButtonForWindowTwo();
 
-					tableBAIforMan.setSizeUndefined();
-					window.setContent(tableBAIforMan);
-					UI.getCurrent().addWindow(window);
-				}
-			});
-			buttonForWindowOne.setIcon(FontAwesome.SEARCH);
-			buttonForWindowOne.setStyleName(ValoTheme.BUTTON_PRIMARY);
+			windowTwoButtonAction();
 
-			buttonForWindowTwo = new Button("SprawdŸ tabele BAI dla kobiet");
+			layoutForButtons = new HorizontalLayout(buttonForWindowOne, buttonForWindowTwo);
+			layoutForButtons.setSpacing(true);
+
+			return this;
+		}
+
+		private void windowTwoButtonAction() {
 			buttonForWindowTwo.addClickListener(new ClickListener() {
 
 				public void buttonClick(ClickEvent event) {
@@ -80,20 +71,54 @@ public class ShowAllCalculatedBodyAdiposityIndexLayoutFactory implements UICompo
 
 					tableBAIforWoman = new Embedded();
 					tableBAIforWoman.setSource(new ThemeResource("../../images/tabela_BAI_K.png"));
-					// tableBMI.setWidth( "100%" );
-
 					tableBAIforWoman.setSizeUndefined();
+
 					window.setContent(tableBAIforWoman);
 					UI.getCurrent().addWindow(window);
 				}
 			});
+		}
+
+		private void windowOneButtonAction() {
+			buttonForWindowOne.addClickListener(new ClickListener() {
+
+				public void buttonClick(ClickEvent event) {
+
+					Window window = new Window();
+					window.setModal(true);
+
+					tableBAIforMan = new Embedded();
+					tableBAIforMan.setSource(new ThemeResource("../../images/tabela_BAI_M.png"));
+					tableBAIforMan.setSizeUndefined();
+
+					window.setContent(tableBAIforMan);
+					UI.getCurrent().addWindow(window);
+				}
+			});
+		}
+
+		private void prepareButtonForWindowTwo() {
+			buttonForWindowTwo = new Button("SprawdŸ tabele BAI dla kobiet");
 			buttonForWindowTwo.setIcon(FontAwesome.SEARCH);
 			buttonForWindowTwo.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		}
 
-			layoutForButtons = new HorizontalLayout(buttonForWindowOne, buttonForWindowTwo);
-			layoutForButtons.setSpacing(true);
+		private void prepareButtonForWindowOne() {
+			buttonForWindowOne = new Button("SprawdŸ tabele BAI dla mê¿czyzn");
+			buttonForWindowOne.setIcon(FontAwesome.SEARCH);
+			buttonForWindowOne.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		}
 
-			return this;
+		private void prepareAdiposityIndexTable() {
+			bodyAdiposityIndexTable = new Grid(container);
+			bodyAdiposityIndexTable.setColumnOrder("bodyAdiposityIndexResult", "userGrowth", "hipCircumference");
+			bodyAdiposityIndexTable.getColumn("bodyAdiposityIndexResult").setHeaderCaption("BAI");
+			bodyAdiposityIndexTable.getColumn("userGrowth").setHeaderCaption("Wzrost (cm)");
+			bodyAdiposityIndexTable.getColumn("hipCircumference").setHeaderCaption("Obwód bioder (cm)");
+			bodyAdiposityIndexTable.getColumn("user").setHeaderCaption("U¿ytkownik");
+			bodyAdiposityIndexTable.removeColumn("id");
+			bodyAdiposityIndexTable.setWidth("100%");
+			bodyAdiposityIndexTable.setImmediate(true);
 		}
 
 		public ShowBodyAdiposityIndexLayout layout() {
@@ -102,20 +127,20 @@ public class ShowAllCalculatedBodyAdiposityIndexLayoutFactory implements UICompo
 			return this;
 		}
 
-		public ShowBodyAdiposityIndexLayout load() {
-			bodyAdiposityIndex = showAllBodyAdiposityIndexService.getAllBodyAdiposityIndex();
+		ShowBodyAdiposityIndexLayout load() {
+			bodyAdiposityIndexEntities = showAllBodyAdiposityIndexService.getAllBodyAdiposityIndex();
 			return this;
 		}
 	}
 
-	public void refreshTables() {
-		bodyAdiposityIndex = showAllBodyAdiposityIndexService.getAllBodyAdiposityIndex();
+	void refreshTables() {
+		bodyAdiposityIndexEntities = showAllBodyAdiposityIndexService.getAllBodyAdiposityIndex();
 		container.removeAllItems();
-		container.addAll(bodyAdiposityIndex);
+		container.addAll(bodyAdiposityIndexEntities);
 	}
 
-	@Autowired
-	private ShowAllBodyAdiposityIndexService showAllBodyAdiposityIndexService;
+
+	private final ShowAllBodyAdiposityIndexService showAllBodyAdiposityIndexService;
 
 	public Component createComponent() {
 		return new ShowBodyAdiposityIndexLayout().load().init().layout();

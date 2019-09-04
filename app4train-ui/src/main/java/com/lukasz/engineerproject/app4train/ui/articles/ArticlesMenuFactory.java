@@ -1,8 +1,7 @@
 
 package com.lukasz.engineerproject.app4train.ui.articles;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import com.lukasz.engineerproject.app4train.ui.articles.contents.*;
 import com.lukasz.engineerproject.app4train.ui.views.UIComponentBuilder;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
@@ -10,89 +9,112 @@ import com.vaadin.ui.VerticalLayout;
 @org.springframework.stereotype.Component
 public class ArticlesMenuFactory implements UIComponentBuilder {
 
-	@Autowired
-	private ArticleOneContentMenuLayoutFactory articleOneContentMenuLayoutFactory;
-	@Autowired
-	private ArticleTwoContentMenuLayoutFactory articleTwoContentMenuLayoutFactory;
-	@Autowired
-	private ArticleThreeContentMenuLayoutFactory articleThreeContentMenuLayoutFactory;
-	@Autowired
-	private ArticleFourContentMenuLayoutFactory articleFourContentMenuLayoutFactory;
-	@Autowired
-	private ArticleFiveContentMenuLayoutFactory articleFiveContentMenuLayoutFactory;
-	@Autowired
-	private ArticleSixContentMenuLayoutFactory articleSixContentMenuLayoutFactory;
-	@Autowired
-	private ArticleSevenContentMenuLayoutFactory articleSevenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleEightContentMenuLayoutFactory articleEightContentMenuLayoutFactory;
-	@Autowired
-	private ArticleNineContentMenuLayoutFactory articleNineContentMenuLayoutFactory;
-	@Autowired
-	private ArticleTenContentMenuLayoutFactory articleTenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleElevenContentMenuLayoutFactory articleElevenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleTwelveContentMenuLayoutFactory articleTwelveContentMenuLayoutFactory;
-	@Autowired
-	private ArticleThirteenContentMenuLayoutFactory articleThirteenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleFourteenContentMenuLayoutFactory articleFourteenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleFifteenContentMenuLayoutFactory articleFifteenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleSixteenContentMenuLayoutFactory articleSixteenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleSeventeenContentMenuLayoutFactory articleSeventeenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleEighteenContentMenuLayoutFactory articleEighteenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleNineteenContentMenuLayoutFactory articleNineteenContentMenuLayoutFactory;
-	@Autowired
-	private ArticleTwentyContentMenuLayoutFactory articleTwentyContentMenuLayoutFactory;
+	private final ArticleOneContentMenuLayoutFactory articleOneContentMenuLayoutFactory;
+	private final ArticleTwoContentMenuLayoutFactory articleTwoContentMenuLayoutFactory;
+	private final ArticleThreeContentMenuLayoutFactory articleThreeContentMenuLayoutFactory;
+	private final ArticleFourContentMenuLayoutFactory articleFourContentMenuLayoutFactory;
+	private final ArticleFiveContentMenuLayoutFactory articleFiveContentMenuLayoutFactory;
+	private final ArticleSixContentMenuLayoutFactory articleSixContentMenuLayoutFactory;
+	private final ArticleSevenContentMenuLayoutFactory articleSevenContentMenuLayoutFactory;
+	private final ArticleEightContentMenuLayoutFactory articleEightContentMenuLayoutFactory;
+	private final ArticleNineContentMenuLayoutFactory articleNineContentMenuLayoutFactory;
+	private final ArticleTenContentMenuLayoutFactory articleTenContentMenuLayoutFactory;
+	private final ArticleElevenContentMenuLayoutFactory articleElevenContentMenuLayoutFactory;
+	private final ArticleTwelveContentMenuLayoutFactory articleTwelveContentMenuLayoutFactory;
+	private final ArticleThirteenContentMenuLayoutFactory articleThirteenContentMenuLayoutFactory;
+	private final ArticleFourteenContentMenuLayoutFactory articleFourteenContentMenuLayoutFactory;
+	private final ArticleFifteenContentMenuLayoutFactory articleFifteenContentMenuLayoutFactory;
+	private final ArticleSixteenContentMenuLayoutFactory articleSixteenContentMenuLayoutFactory;
+	private final ArticleSeventeenContentMenuLayoutFactory articleSeventeenContentMenuLayoutFactory;
+	private final ArticleEighteenContentMenuLayoutFactory articleEighteenContentMenuLayoutFactory;
+	private final ArticleNineteenContentMenuLayoutFactory articleNineteenContentMenuLayoutFactory;
+	private final ArticleTwentyContentMenuLayoutFactory articleTwentyContentMenuLayoutFactory;
+
+	public ArticlesMenuFactory
+			(
+					ArticleOneContentMenuLayoutFactory articleOneContentMenuLayoutFactory,
+					ArticleTwoContentMenuLayoutFactory articleTwoContentMenuLayoutFactory,
+					ArticleThreeContentMenuLayoutFactory articleThreeContentMenuLayoutFactory,
+					ArticleFourContentMenuLayoutFactory articleFourContentMenuLayoutFactory,
+					ArticleFiveContentMenuLayoutFactory articleFiveContentMenuLayoutFactory,
+					ArticleSixContentMenuLayoutFactory articleSixContentMenuLayoutFactory,
+					ArticleSevenContentMenuLayoutFactory articleSevenContentMenuLayoutFactory,
+					ArticleEightContentMenuLayoutFactory articleEightContentMenuLayoutFactory,
+					ArticleNineContentMenuLayoutFactory articleNineContentMenuLayoutFactory,
+					ArticleTenContentMenuLayoutFactory articleTenContentMenuLayoutFactory,
+					ArticleElevenContentMenuLayoutFactory articleElevenContentMenuLayoutFactory,
+					ArticleTwelveContentMenuLayoutFactory articleTwelveContentMenuLayoutFactory,
+					ArticleThirteenContentMenuLayoutFactory articleThirteenContentMenuLayoutFactory,
+					ArticleFourteenContentMenuLayoutFactory articleFourteenContentMenuLayoutFactory,
+					ArticleFifteenContentMenuLayoutFactory articleFifteenContentMenuLayoutFactory,
+					ArticleSixteenContentMenuLayoutFactory articleSixteenContentMenuLayoutFactory,
+					ArticleSeventeenContentMenuLayoutFactory articleSeventeenContentMenuLayoutFactory,
+					ArticleEighteenContentMenuLayoutFactory articleEighteenContentMenuLayoutFactory,
+					ArticleNineteenContentMenuLayoutFactory articleNineteenContentMenuLayoutFactory,
+					ArticleTwentyContentMenuLayoutFactory articleTwentyContentMenuLayoutFactory
+			) {
+		this.articleOneContentMenuLayoutFactory = articleOneContentMenuLayoutFactory;
+		this.articleTwoContentMenuLayoutFactory = articleTwoContentMenuLayoutFactory;
+		this.articleThreeContentMenuLayoutFactory = articleThreeContentMenuLayoutFactory;
+		this.articleFourContentMenuLayoutFactory = articleFourContentMenuLayoutFactory;
+		this.articleFiveContentMenuLayoutFactory = articleFiveContentMenuLayoutFactory;
+		this.articleSixContentMenuLayoutFactory = articleSixContentMenuLayoutFactory;
+		this.articleSevenContentMenuLayoutFactory = articleSevenContentMenuLayoutFactory;
+		this.articleEightContentMenuLayoutFactory = articleEightContentMenuLayoutFactory;
+		this.articleNineContentMenuLayoutFactory = articleNineContentMenuLayoutFactory;
+		this.articleTenContentMenuLayoutFactory = articleTenContentMenuLayoutFactory;
+		this.articleElevenContentMenuLayoutFactory = articleElevenContentMenuLayoutFactory;
+		this.articleTwelveContentMenuLayoutFactory = articleTwelveContentMenuLayoutFactory;
+		this.articleThirteenContentMenuLayoutFactory = articleThirteenContentMenuLayoutFactory;
+		this.articleFourteenContentMenuLayoutFactory = articleFourteenContentMenuLayoutFactory;
+		this.articleFifteenContentMenuLayoutFactory = articleFifteenContentMenuLayoutFactory;
+		this.articleSixteenContentMenuLayoutFactory = articleSixteenContentMenuLayoutFactory;
+		this.articleSeventeenContentMenuLayoutFactory = articleSeventeenContentMenuLayoutFactory;
+		this.articleEighteenContentMenuLayoutFactory = articleEighteenContentMenuLayoutFactory;
+		this.articleNineteenContentMenuLayoutFactory = articleNineteenContentMenuLayoutFactory;
+		this.articleTwentyContentMenuLayoutFactory = articleTwentyContentMenuLayoutFactory;
+	}
 
 	private class ArticlesMenu extends VerticalLayout {
 
-		private VerticalLayout layoutForTopics;//
+		private VerticalLayout layoutForTopics;
 
 		public ArticlesMenu init() {
 			layoutForTopics = new VerticalLayout();
-			Component componentForArticleOne = articleOneContentMenuLayoutFactory.createComponent();
-			Component componentForArticleTwo = articleTwoContentMenuLayoutFactory.createComponent();
-			Component componentForArticleThree = articleThreeContentMenuLayoutFactory.createComponent();
-			Component componentForArticleFour = articleFourContentMenuLayoutFactory.createComponent();
-			Component componentForArticleFive = articleFiveContentMenuLayoutFactory.createComponent();
-			Component componentForArticleSix = articleSixContentMenuLayoutFactory.createComponent();
-			Component componentForArticleSeven = articleSevenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleEight = articleEightContentMenuLayoutFactory.createComponent();
-			Component componentForArticleNine = articleNineContentMenuLayoutFactory.createComponent();
-			Component componentForArticleTen = articleTenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleEleven = articleElevenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleTwelve = articleTwelveContentMenuLayoutFactory.createComponent();
-			Component componentForArticleThirteen = articleThirteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleFourteen = articleFourteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleFifteen = articleFifteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleSixteen = articleSixteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleSeventeen = articleSeventeenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleEighteen = articleEighteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleNineteen = articleNineteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleTwenty = articleTwentyContentMenuLayoutFactory.createComponent();
-
-			layoutForTopics.addComponents(componentForArticleOne, componentForArticleTwo, componentForArticleThree,
-					componentForArticleFour, componentForArticleFive, componentForArticleSix, componentForArticleSeven,
-					componentForArticleEight, componentForArticleNine, componentForArticleTen,
-					componentForArticleEleven, componentForArticleTwelve, componentForArticleThirteen,
-					componentForArticleFourteen, componentForArticleFifteen, componentForArticleSixteen,
-					componentForArticleSeventeen, componentForArticleEighteen, componentForArticleNineteen,
-					componentForArticleTwenty);
+			prepareComponentsIntoLayout();
 			return this;
 		}
 
-		public ArticlesMenu layout() {
+		private void prepareComponentsIntoLayout() {
+			layoutForTopics.addComponents(
+					articleOneContentMenuLayoutFactory.createComponent(),
+					articleTwoContentMenuLayoutFactory.createComponent(),
+					articleThreeContentMenuLayoutFactory.createComponent(),
+					articleFourContentMenuLayoutFactory.createComponent(),
+					articleFiveContentMenuLayoutFactory.createComponent(),
+					articleSixContentMenuLayoutFactory.createComponent(),
+					articleSevenContentMenuLayoutFactory.createComponent(),
+					articleEightContentMenuLayoutFactory.createComponent(),
+					articleNineContentMenuLayoutFactory.createComponent(),
+					articleTenContentMenuLayoutFactory.createComponent(),
+					articleElevenContentMenuLayoutFactory.createComponent(),
+					articleTwelveContentMenuLayoutFactory.createComponent(),
+					articleThirteenContentMenuLayoutFactory.createComponent(),
+					articleFourteenContentMenuLayoutFactory.createComponent(),
+					articleFifteenContentMenuLayoutFactory.createComponent(),
+					articleFifteenContentMenuLayoutFactory.createComponent(),
+					articleSixteenContentMenuLayoutFactory.createComponent(),
+					articleSeventeenContentMenuLayoutFactory.createComponent(),
+					articleEighteenContentMenuLayoutFactory.createComponent(),
+					articleNineteenContentMenuLayoutFactory.createComponent(),
+					articleTwentyContentMenuLayoutFactory.createComponent()
+			);
+		}
+
+		ArticlesMenu setPropertiesToLayout() {
 
 			setWidth("100%");
 			setHeightUndefined();
-
 			layoutForTopics.setSpacing(true);
 			addComponent(layoutForTopics);
 
@@ -101,6 +123,6 @@ public class ArticlesMenuFactory implements UIComponentBuilder {
 	}
 
 	public Component createComponent() {
-		return new ArticlesMenu().init().layout();
+		return new ArticlesMenu().init().setPropertiesToLayout();
 	}
 }

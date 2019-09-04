@@ -1,6 +1,6 @@
 package com.lukasz.engineerproject.app4train.ui.nutritionalAdvice;
 
-import com.lukasz.engineerproject.app4train.utils.UtilsForNutritionalAdvicesTitles;
+import com.lukasz.engineerproject.app4train.utils.NutritionalAdvicesTitles;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -21,15 +21,31 @@ public class NutritionalAdviceNineContentMenuLayoutFactory {
 
 		private static final long serialVersionUID = 1L;
 		private Label throughtExplanationOfNutritionalAdviceNine;
-		private Label topicOfOfNutritionalAdviceNine;
-		private HorizontalLayout layoutForButtonAndWindow;
 		private Button buttonForWindow;
 
 		public NutritionalAdviceNineContentMenuLayout init() {
 
-			topicOfOfNutritionalAdviceNine = new Label(UtilsForNutritionalAdvicesTitles.TOPIC_NINE.getString());
+			Label topicOfOfNutritionalAdviceNine = new Label(NutritionalAdvicesTitles.TOPIC_NINE.getString());
 
+			prepareButton();
+
+			buttonAction();
+
+			HorizontalLayout layoutForButtonAndWindow = new HorizontalLayout(buttonForWindow, topicOfOfNutritionalAdviceNine);
+			layoutForButtonAndWindow.setSpacing(true);
+
+			addComponent(layoutForButtonAndWindow);
+
+			return this;
+		}
+
+		private void prepareButton() {
 			buttonForWindow = new Button();
+			buttonForWindow.setIcon(FontAwesome.SEARCH);
+			buttonForWindow.setStyleName(ValoTheme.BUTTON_SMALL);
+		}
+
+		private void buttonAction() {
 			buttonForWindow.addClickListener(new ClickListener() {
 
 				public void buttonClick(ClickEvent event) {
@@ -54,15 +70,6 @@ public class NutritionalAdviceNineContentMenuLayoutFactory {
 					UI.getCurrent().addWindow(window);
 				}
 			});
-			buttonForWindow.setIcon(FontAwesome.SEARCH);
-			buttonForWindow.setStyleName(ValoTheme.BUTTON_SMALL);
-
-			layoutForButtonAndWindow = new HorizontalLayout(buttonForWindow, topicOfOfNutritionalAdviceNine);
-			layoutForButtonAndWindow.setSpacing(true);
-
-			addComponent(layoutForButtonAndWindow);
-
-			return this;
 		}
 
 	}

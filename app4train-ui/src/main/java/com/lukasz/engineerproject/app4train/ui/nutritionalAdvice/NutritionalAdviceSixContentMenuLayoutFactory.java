@@ -1,6 +1,6 @@
 package com.lukasz.engineerproject.app4train.ui.nutritionalAdvice;
 
-import com.lukasz.engineerproject.app4train.utils.UtilsForNutritionalAdvicesTitles;
+import com.lukasz.engineerproject.app4train.utils.NutritionalAdvicesTitles;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -21,15 +21,31 @@ public class NutritionalAdviceSixContentMenuLayoutFactory {
 
 		private static final long serialVersionUID = 1L;
 		private Label throughtExplanationOfNutritionalAdviceSix;
-		private Label topicOfOfNutritionalAdviceSix;
-		private HorizontalLayout layoutForButtonAndWindow;
 		private Button buttonForWindow;
 
 		public NutritionalAdviceSixContentMenuLayout init() {
 
-			topicOfOfNutritionalAdviceSix = new Label(UtilsForNutritionalAdvicesTitles.TOPIC_SIX.getString());
+			Label topicOfOfNutritionalAdviceSix = new Label(NutritionalAdvicesTitles.TOPIC_SIX.getString());
 
+			prepareButton();
+
+			buttonAction();
+
+			HorizontalLayout layoutForButtonAndWindow = new HorizontalLayout(buttonForWindow, topicOfOfNutritionalAdviceSix);
+			layoutForButtonAndWindow.setSpacing(true);
+
+			addComponent(layoutForButtonAndWindow);
+
+			return this;
+		}
+
+		private void prepareButton() {
 			buttonForWindow = new Button();
+			buttonForWindow.setIcon(FontAwesome.SEARCH);
+			buttonForWindow.setStyleName(ValoTheme.BUTTON_SMALL);
+		}
+
+		private void buttonAction() {
 			buttonForWindow.addClickListener(new ClickListener() {
 
 				public void buttonClick(ClickEvent event) {
@@ -54,15 +70,6 @@ public class NutritionalAdviceSixContentMenuLayoutFactory {
 					UI.getCurrent().addWindow(window);
 				}
 			});
-			buttonForWindow.setIcon(FontAwesome.SEARCH);
-			buttonForWindow.setStyleName(ValoTheme.BUTTON_SMALL);
-
-			layoutForButtonAndWindow = new HorizontalLayout(buttonForWindow, topicOfOfNutritionalAdviceSix);
-			layoutForButtonAndWindow.setSpacing(true);
-
-			addComponent(layoutForButtonAndWindow);
-
-			return this;
 		}
 
 	}

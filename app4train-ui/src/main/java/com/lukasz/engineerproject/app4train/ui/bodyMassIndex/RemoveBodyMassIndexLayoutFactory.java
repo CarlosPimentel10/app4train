@@ -1,10 +1,11 @@
 package com.lukasz.engineerproject.app4train.ui.bodyMassIndex;
 
 import java.util.List;
+
+import com.lukasz.engineerproject.app4train.model.domain.BodyMassIndexEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.lukasz.engineerproject.app4train.model.entity.BodyMassIndex;
-import com.lukasz.engineerproject.app4train.service.removeBodyMassIndex.RemoveBodyMassIndexService;
-import com.lukasz.engineerproject.app4train.service.showBodyMassIndexResult.ShowAllBodyMassIndexService;
+import com.lukasz.engineerproject.app4train.service.bmi.RemoveBodyMassIndexService;
+import com.lukasz.engineerproject.app4train.service.bmi.ShowAllBodyMassIndexService;
 import com.lukasz.engineerproject.app4train.ui.commons.App4TrainMainUI;
 import com.lukasz.engineerproject.app4train.utils.NotificationMessages;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
@@ -34,15 +35,15 @@ public class RemoveBodyMassIndexLayoutFactory extends VerticalLayout implements 
 	public static final String NAME = "usuñobliczonebmi";
 	private Grid removeBodyMassIndexTable;
 	private Button removeBodyMassIndexeButton;
-	private List<BodyMassIndex> bodyMassIndexes;
+	private List<BodyMassIndexEntity> bodyMassIndexEntities;
 
 	private void addLayout() {
 
 		removeBodyMassIndexeButton = new Button(StringUtils.REMOVE_BODY_MASS_INDEX.getString());
 
 		setMargin(true);
-		BeanItemContainer<BodyMassIndex> container = new BeanItemContainer<BodyMassIndex>(BodyMassIndex.class,
-				bodyMassIndexes);
+		BeanItemContainer<BodyMassIndexEntity> container = new BeanItemContainer<BodyMassIndexEntity>(BodyMassIndexEntity.class,
+				bodyMassIndexEntities);
 
 		removeBodyMassIndexTable = new Grid(container);
 		removeBodyMassIndexTable.setColumnOrder("bodyMassIndexResult", "userGrowth", "userWeight", "user");
@@ -67,9 +68,9 @@ public class RemoveBodyMassIndexLayoutFactory extends VerticalLayout implements 
 		MultiSelectionModel selectionModel = (MultiSelectionModel) removeBodyMassIndexTable.getSelectionModel();
 
 		for (Object selectedItem : selectionModel.getSelectedRows()) {
-			BodyMassIndex bodyMassIndex = (BodyMassIndex) selectedItem;
-			removeBodyMassIndexTable.getContainerDataSource().removeItem(bodyMassIndex);
-			removeBodyMassIndexService.removeBodyMassIndex(bodyMassIndex);
+			BodyMassIndexEntity bodyMassIndexEntity = (BodyMassIndexEntity) selectedItem;
+			removeBodyMassIndexTable.getContainerDataSource().removeItem(bodyMassIndexEntity);
+			removeBodyMassIndexService.removeBodyMassIndex(bodyMassIndexEntity);
 		}
 
 		Notification.show(NotificationMessages.BODY_MASS_INDEX_REMOVE_SUCCESS_TITLE.getString(),
@@ -79,7 +80,7 @@ public class RemoveBodyMassIndexLayoutFactory extends VerticalLayout implements 
 	}
 
 	private void loadBodyMassIndexes() {
-		bodyMassIndexes = showAllBodyMassIndexService.getAllBodyMassIndex();
+		bodyMassIndexEntities = showAllBodyMassIndexService.getAllBodyMassIndex();
 	}
 
 	public void enter(ViewChangeEvent event) {

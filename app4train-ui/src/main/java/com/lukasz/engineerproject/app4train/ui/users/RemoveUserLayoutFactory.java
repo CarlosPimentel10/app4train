@@ -1,10 +1,10 @@
 package com.lukasz.engineerproject.app4train.ui.users;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.lukasz.engineerproject.app4train.model.entity.User;
-import com.lukasz.engineerproject.app4train.service.removeUser.RemoveUserService;
-import com.lukasz.engineerproject.app4train.service.showUsers.ShowUsersService;
+
+import com.lukasz.engineerproject.app4train.model.domain.UserEntity;
+import com.lukasz.engineerproject.app4train.service.user.RemoveUserService;
+import com.lukasz.engineerproject.app4train.service.user.ShowUsersService;
 import com.lukasz.engineerproject.app4train.ui.commons.App4TrainMainUI;
 import com.lukasz.engineerproject.app4train.utils.NotificationMessages;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
@@ -25,24 +25,40 @@ import com.vaadin.ui.VerticalLayout;
 @SpringView(name = RemoveUserLayoutFactory.NAME, ui = App4TrainMainUI.class)
 public class RemoveUserLayoutFactory extends VerticalLayout implements View, Button.ClickListener {
 
-	@Autowired
-	private ShowUsersService userService;
+	private final ShowUsersService userService;
 
-	@Autowired
-	private RemoveUserService removeUserService;
+	private final RemoveUserService removeUserService;
 
 	public static final String NAME = "usuñu¿ytkownika";
 	private Grid removeUserTable;
 	private Button removeUserButton;
-	private List<User> users;
+	private List<UserEntity> userEntities;
+
+	public RemoveUserLayoutFactory(ShowUsersService userService, RemoveUserService removeUserService) {
+		this.userService = userService;
+		this.removeUserService = removeUserService;
+	}
 
 	private void addLayout() {
 
-		removeUserButton = new Button(StringUtils.REMOVE_USER.getString());
-
 		setMargin(true);
-		BeanItemContainer<User> container = new BeanItemContainer<User>(User.class, users);
+		BeanItemContainer<UserEntity> container = new BeanItemContainer<UserEntity>(UserEntity.class, userEntities);
 
+		prepareTableWithUsersToRemove(container);
+
+		prepareButtonToRemove();
+
+		addComponent(removeUserTable);
+		addComponent(removeUserButton);
+	}
+
+	private void prepareButtonToRemove() {
+		removeUserButton = new Button(StringUtils.REMOVE_USER.getString());
+		removeUserButton.addClickListener(this);
+		removeUserButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+	}
+
+	private void prepareTableWithUsersToRemove(BeanItemContainer<UserEntity> container) {
 		removeUserTable = new Grid(container);
 		removeUserTable.setColumnOrder("firstName", "lastName", "age", "gender");
 		removeUserTable.getColumn("firstName").setHeaderCaption("Imiê");
@@ -53,32 +69,34 @@ public class RemoveUserLayoutFactory extends VerticalLayout implements View, But
 		removeUserTable.setImmediate(true);
 		removeUserTable.setSelectionMode(SelectionMode.MULTI);
 		removeUserTable.setWidth("100%");
-
-		removeUserButton.addClickListener(this);
-		removeUserButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-
-		addComponent(removeUserTable);
-		addComponent(removeUserButton);
 	}
 
 	public void buttonClick(ClickEvent event) {
 
 		MultiSelectionModel selectionModel = (MultiSelectionModel) removeUserTable.getSelectionModel();
 
-		for (Object selectedItem : selectionModel.getSelectedRows()) {
-			User user = (User) selectedItem;
-			removeUserTable.getContainerDataSource().removeItem(user);
-			removeUserService.removeUser(user);
-		}
+		removeSelectedItem(selectionModel);
 
-		Notification.show(NotificationMessages.USER_REMOVE_SUCCESS_TITLE.getString(),
-				NotificationMessages.USER_REMOVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
+		getMessage();
 
 		removeUserTable.getSelectionModel().reset();
 	}
 
+	private void removeSelectedItem(MultiSelectionModel selectionModel) {
+		for (Object selectedItem : selectionModel.getSelectedRows()) {
+			UserEntity userEntity = (UserEntity) selectedItem;
+			removeUserTable.getContainerDataSource().removeItem(userEntity);
+			removeUserService.removeUser(userEntity);
+		}
+	}
+
+	private void getMessage() {
+		Notification.show(NotificationMessages.USER_REMOVE_SUCCESS_TITLE.getString(),
+				NotificationMessages.USER_REMOVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
+	}
+
 	private void loadStudents() {
-		users = userService.getAllUsers();
+		userEntities = userService.getAllUsers();
 	}
 
 	public void enter(ViewChangeEvent event) {

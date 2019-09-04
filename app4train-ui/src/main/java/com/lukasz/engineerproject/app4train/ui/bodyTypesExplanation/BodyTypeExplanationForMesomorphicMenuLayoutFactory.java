@@ -29,26 +29,37 @@ public class BodyTypeExplanationForMesomorphicMenuLayoutFactory {
 		private Label throughtExplanationOfMesomorphicType;
 		private Label explanationOfMesomorphicType;
 		private FormLayout layoutForMenuComponents;
-		private HorizontalLayout layoutForButtonAndPopup;
 		private Button buttonForPopup;
-		private Panel panel;
 		private Embedded picture;
 
 		public BodyTypeExplanationForMesomorphicMenuLayout init() {
 
 			layoutForMenuComponents = new FormLayout();
 
-			shortExplanationOfMesomorphicType = new Label(
-					"<p><ul><li>niski poziom tkanki t³uszczowej</li><li>nabieranie masy miêœniowej przychodzi dosyæ ³atwo</li><li>du¿a si³a</li><li>spalanie tkanki t³uszczowej nie jest wiêkszym problemem</li><li>szerokie barki, w¹ska talia, wyraŸnie widoczne miêœnie</li></ul></p>",
-					ContentMode.HTML);
+			prepareDescription();
 
-			picture = new Embedded();
-			picture.setSource(new ThemeResource("../../images/mezomorfik.png"));
-			picture.setSizeUndefined();
+			preparePicture();
 
-			explanationOfMesomorphicType = new Label("Szczegó³owy opis mezomorfika");
+			prepareButton();
 
+			buttonAction();
+
+			HorizontalLayout layoutForButtonAndPopup = new HorizontalLayout(buttonForPopup, explanationOfMesomorphicType);
+			layoutForButtonAndPopup.setSpacing(true);
+
+			layoutForMenuComponents.addComponents(shortExplanationOfMesomorphicType, picture, layoutForButtonAndPopup);
+			addComponent(layoutForMenuComponents);
+
+			return this;
+		}
+
+		private void prepareButton() {
 			buttonForPopup = new Button();
+			buttonForPopup.setIcon(FontAwesome.SEARCH);
+			buttonForPopup.setStyleName(ValoTheme.BUTTON_SMALL);
+		}
+
+		private void buttonAction() {
 			buttonForPopup.addClickListener(new ClickListener() {
 
 				public void buttonClick(ClickEvent event) {
@@ -69,22 +80,26 @@ public class BodyTypeExplanationForMesomorphicMenuLayoutFactory {
 					UI.getCurrent().addWindow(window);
 				}
 			});
-			buttonForPopup.setIcon(FontAwesome.SEARCH);
-			buttonForPopup.setStyleName(ValoTheme.BUTTON_SMALL);
+		}
 
-			layoutForButtonAndPopup = new HorizontalLayout(buttonForPopup, explanationOfMesomorphicType);
-			layoutForButtonAndPopup.setSpacing(true);
+		private void preparePicture() {
+			picture = new Embedded();
+			picture.setSource(new ThemeResource("../../images/mezomorfik.png"));
+			picture.setSizeUndefined();
+		}
 
-			layoutForMenuComponents.addComponents(shortExplanationOfMesomorphicType, picture, layoutForButtonAndPopup);
-			addComponent(layoutForMenuComponents);
+		private void prepareDescription() {
+			shortExplanationOfMesomorphicType = new Label(
+					"<p><ul><li>niski poziom tkanki t³uszczowej</li><li>nabieranie masy miêœniowej przychodzi dosyæ ³atwo</li><li>du¿a si³a</li><li>spalanie tkanki t³uszczowej nie jest wiêkszym problemem</li><li>szerokie barki, w¹ska talia, wyraŸnie widoczne miêœnie</li></ul></p>",
+					ContentMode.HTML);
 
-			return this;
+			explanationOfMesomorphicType = new Label("Szczegó³owy opis mezomorfika");
 		}
 
 		public Component layout() {
 
 			setMargin(true);
-			panel = new Panel("Typ budowy cia³a - MEZOMORFIK");
+			Panel panel = new Panel("Typ budowy cia³a - MEZOMORFIK");
 			panel.setWidth("100%");
 			panel.setContent(layoutForMenuComponents);
 

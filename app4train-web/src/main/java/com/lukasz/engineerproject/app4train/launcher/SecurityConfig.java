@@ -1,6 +1,5 @@
 package com.lukasz.engineerproject.app4train.launcher;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,34 +13,46 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
-	@Autowired
+	private final UserDetailsService userDetailsService;
+
+	public SecurityConfig(UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
+
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(userDetailsService);
 		authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
 		auth.userDetailsService(userDetailsService).and().authenticationProvider(authenticationProvider);
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+
 		http.csrf().disable().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-		.and().authorizeRequests().antMatchers("/VAADIN/**","/PUSH/**","/UIDL/**","/login","/signup","/login/**","/logout","/vaadinServlet/**").permitAll()
-			.antMatchers("/ui","/ui/**").fullyAuthenticated();
-		
+				.and().authorizeRequests()
+				.antMatchers(
+						"/VAADIN/**",
+						"/PUSH/**",
+						"/UIDL/**",
+						"/login",
+						"/signup",
+						"/login/**",
+						"/logout",
+						"/vaadinServlet/**")
+				.permitAll()
+				.antMatchers("/ui", "/ui/**").fullyAuthenticated();
+
 	}
-	
+
 	@Bean
 	public DaoAuthenticationProvider createDaoAuthenticationProvider() {
-		
+
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setUserDetailsService(userDetailsService);
 		provider.setPasswordEncoder(passwordEncoder());
 		return provider;
-		
+
 	}
 
 	@Bean

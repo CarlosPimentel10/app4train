@@ -1,11 +1,11 @@
 package com.lukasz.engineerproject.app4train.ui.bodyAdiposityIndex;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.lukasz.engineerproject.app4train.model.entity.BodyAdiposityIndex;
-import com.lukasz.engineerproject.app4train.model.entity.User;
-import com.lukasz.engineerproject.app4train.service.getBodyAdiposityIndexResult.GetBodyAdiposityIndexResultService;
-import com.lukasz.engineerproject.app4train.service.showUsers.ShowUsersServiceImpl;
+
+import com.lukasz.engineerproject.app4train.model.domain.BodyAdiposityIndexEntity;
+import com.lukasz.engineerproject.app4train.model.domain.UserEntity;
+import com.lukasz.engineerproject.app4train.service.bai.GetBodyAdiposityIndexResultService;
+import com.lukasz.engineerproject.app4train.service.user.UserServiceImpl.ShowUsersServiceImpl;
 import com.lukasz.engineerproject.app4train.utils.NotificationMessages;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -26,34 +26,39 @@ import com.vaadin.ui.VerticalLayout;
 @org.springframework.stereotype.Component
 public class CalculateBodyAdiposityIndexLayoutFactory {
 
+	private final GetBodyAdiposityIndexResultService getBodyAdiposityIndexResultService;
+	private final ShowUsersServiceImpl showUsersService;
+
+	public CalculateBodyAdiposityIndexLayoutFactory(GetBodyAdiposityIndexResultService getBodyAdiposityIndexResultService, ShowUsersServiceImpl showUsersService) {
+		this.getBodyAdiposityIndexResultService = getBodyAdiposityIndexResultService;
+		this.showUsersService = showUsersService;
+	}
+
 	private class AddBodyAdiposityIndexLayout extends VerticalLayout implements ClickListener {
 
 		private static final long serialVersionUID = 1L;
 		private TextField hipCircumference;
 		private TextField userGrowth;
 		private Button calculateButton;
-		private BeanFieldGroup<BodyAdiposityIndex> fieldGroup;
-		private BodyAdiposityIndex bodyAdiposityIndex;
+		private BeanFieldGroup<BodyAdiposityIndexEntity> fieldGroup;
+		private BodyAdiposityIndexEntity bodyAdiposityIndexEntity;
 		private ComboBox user;
 		private FormLayout formLayout;
 		private BodyAdiposityIndexSavedListener bodyAdiposityIndexSavedListener;
 
-		public AddBodyAdiposityIndexLayout(BodyAdiposityIndexSavedListener bodyAdiposityIndexSavedListener) {
+		AddBodyAdiposityIndexLayout(BodyAdiposityIndexSavedListener bodyAdiposityIndexSavedListener) {
 			this.bodyAdiposityIndexSavedListener = bodyAdiposityIndexSavedListener;
-			this.bodyAdiposityIndex = new BodyAdiposityIndex();
+			this.bodyAdiposityIndexEntity = new BodyAdiposityIndexEntity();
 		}
 
 		public AddBodyAdiposityIndexLayout init() {
 
-			fieldGroup = new BeanFieldGroup<BodyAdiposityIndex>(BodyAdiposityIndex.class);
+			fieldGroup = new BeanFieldGroup<BodyAdiposityIndexEntity>(BodyAdiposityIndexEntity.class);
 			hipCircumference = new TextField(StringUtils.HIP_CIRCUMFERENCE.getString());
 			userGrowth = new TextField(StringUtils.GROWTH.getString());
 			user = new ComboBox(StringUtils.USER.getString());
 
-			calculateButton = new Button(StringUtils.CALCULATE.getString(), this);
-			calculateButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-			calculateButton.setIcon(FontAwesome.PLUS);
-			calculateButton.addClickListener(this);
+			prepareCalculateButton();
 
 			userGrowth.setNullRepresentation("");
 			hipCircumference.setNullRepresentation("");
@@ -63,9 +68,16 @@ public class CalculateBodyAdiposityIndexLayoutFactory {
 			return this;
 		}
 
-		public AddBodyAdiposityIndexLayout bind() {
+		private void prepareCalculateButton() {
+			calculateButton = new Button(StringUtils.CALCULATE.getString(), this);
+			calculateButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+			calculateButton.setIcon(FontAwesome.PLUS);
+			calculateButton.addClickListener(this);
+		}
+
+		AddBodyAdiposityIndexLayout bind() {
 			fieldGroup.bindMemberFields(this);
-			fieldGroup.setItemDataSource(bodyAdiposityIndex);
+			fieldGroup.setItemDataSource(bodyAdiposityIndexEntity);
 
 			return this;
 		}
@@ -113,7 +125,7 @@ public class CalculateBodyAdiposityIndexLayoutFactory {
 				return;
 			}
 
-			getBodyAdiposityIndexResultService.save(bodyAdiposityIndex);
+			getBodyAdiposityIndexResultService.save(bodyAdiposityIndexEntity);
 			bodyAdiposityIndexSavedListener.bodyAdiposityIndexSaved();
 
 			Notification.show(NotificationMessages.BAI_SAVE_SUCCESS_TITLE.getString(),
@@ -122,10 +134,10 @@ public class CalculateBodyAdiposityIndexLayoutFactory {
 			clearFields();
 		}
 
-		public AddBodyAdiposityIndexLayout load() {
+		AddBodyAdiposityIndexLayout load() {
 
-			List<User> users = showUsersService.getAllUsers();
-			user.addItems(users);
+			List<UserEntity> userEntities = showUsersService.getAllUsers();
+			user.addItems(userEntities);
 
 			return this;
 		}
@@ -134,12 +146,6 @@ public class CalculateBodyAdiposityIndexLayoutFactory {
 	private boolean isOperationValid() {
 		return showUsersService.getAllUsers().size() != 0;
 	}
-
-	@Autowired
-	private GetBodyAdiposityIndexResultService getBodyAdiposityIndexResultService;
-
-	@Autowired
-	private ShowUsersServiceImpl showUsersService;
 
 	public Component createComponent(BodyAdiposityIndexSavedListener bodyAdiposityIndexSavedListener) {
 		return new AddBodyAdiposityIndexLayout(bodyAdiposityIndexSavedListener).init().load().bind().layout();

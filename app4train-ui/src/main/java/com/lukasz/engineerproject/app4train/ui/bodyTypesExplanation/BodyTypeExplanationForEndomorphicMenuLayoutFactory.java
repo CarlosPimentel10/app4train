@@ -28,26 +28,38 @@ public class BodyTypeExplanationForEndomorphicMenuLayoutFactory {
 		private Label throughtExplanationOfEndomorphicType;
 		private Label explanationOfEndomorphicType;
 		private FormLayout layoutForMenuComponents;
-		private HorizontalLayout layoutForButtonAndPopup;
 		private Button buttonForPopup;
-		private Panel panel;
 		private Embedded picture;
 
 		public BodyTypeExplanationForEndomorphicMenuLayout init() {
 
 			layoutForMenuComponents = new FormLayout();
 
-			shortExplanationOfEndomorphicType = new Label(
-					"<p><p><ul><li>zwolniony metabolizm</li><li>znacznie wiêksza si³a wyjœciowa od ektomorfika</li><li>t³uszcz gromadzi siê na wszystkich partiach cia³a</li><li>znacznie trudniej spaliæ t³uszcz ni¿ ektomorfikowi</li><li>wysoki poziom tkanki t³uszczowej</li></ul></p></p>",
-					ContentMode.HTML);
+			prepareDescription();
 
-			picture = new Embedded();
-			picture.setSource(new ThemeResource("../../images/endomorfik.png"));
-			picture.setSizeUndefined();
+			preparePicture();
 
-			explanationOfEndomorphicType = new Label("Szczegó³owy opis endomorfika");
+			prepareButton();
 
+			buttonAction();
+
+
+			HorizontalLayout layoutForButtonAndPopup = new HorizontalLayout(buttonForPopup, explanationOfEndomorphicType);
+			layoutForButtonAndPopup.setSpacing(true);
+
+			layoutForMenuComponents.addComponents(shortExplanationOfEndomorphicType, picture, layoutForButtonAndPopup);
+			addComponent(layoutForMenuComponents);
+
+			return this;
+		}
+
+		private void prepareButton() {
 			buttonForPopup = new Button();
+			buttonForPopup.setIcon(FontAwesome.SEARCH);
+			buttonForPopup.setStyleName(ValoTheme.BUTTON_SMALL);
+		}
+
+		private void buttonAction() {
 			buttonForPopup.addClickListener(new ClickListener() {
 
 				public void buttonClick(ClickEvent event) {
@@ -69,22 +81,26 @@ public class BodyTypeExplanationForEndomorphicMenuLayoutFactory {
 					UI.getCurrent().addWindow(window);
 				}
 			});
-			buttonForPopup.setIcon(FontAwesome.SEARCH);
-			buttonForPopup.setStyleName(ValoTheme.BUTTON_SMALL);
+		}
 
-			layoutForButtonAndPopup = new HorizontalLayout(buttonForPopup, explanationOfEndomorphicType);
-			layoutForButtonAndPopup.setSpacing(true);
+		private void preparePicture() {
+			picture = new Embedded();
+			picture.setSource(new ThemeResource("../../images/endomorfik.png"));
+			picture.setSizeUndefined();
+		}
 
-			layoutForMenuComponents.addComponents(shortExplanationOfEndomorphicType, picture, layoutForButtonAndPopup);
-			addComponent(layoutForMenuComponents);
+		private void prepareDescription() {
+			shortExplanationOfEndomorphicType = new Label(
+					"<p><p><ul><li>zwolniony metabolizm</li><li>znacznie wiêksza si³a wyjœciowa od ektomorfika</li><li>t³uszcz gromadzi siê na wszystkich partiach cia³a</li><li>znacznie trudniej spaliæ t³uszcz ni¿ ektomorfikowi</li><li>wysoki poziom tkanki t³uszczowej</li></ul></p></p>",
+					ContentMode.HTML);
 
-			return this;
+			explanationOfEndomorphicType = new Label("Szczegó³owy opis endomorfika");
 		}
 
 		public Component layout() {
 
 			setMargin(true);
-			panel = new Panel("Typ budowy cia³a - ENDOMORFIK");
+			Panel panel = new Panel("Typ budowy cia³a - ENDOMORFIK");
 			panel.setWidth("100%");
 			panel.setContent(layoutForMenuComponents);
 

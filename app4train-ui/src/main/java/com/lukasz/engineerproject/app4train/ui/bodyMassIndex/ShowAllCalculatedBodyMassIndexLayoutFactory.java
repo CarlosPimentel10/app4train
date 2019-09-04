@@ -3,8 +3,8 @@ package com.lukasz.engineerproject.app4train.ui.bodyMassIndex;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.lukasz.engineerproject.app4train.model.entity.BodyMassIndex;
-import com.lukasz.engineerproject.app4train.service.showBodyMassIndexResult.ShowAllBodyMassIndexService;
+import com.lukasz.engineerproject.app4train.model.domain.BodyMassIndexEntity;
+import com.lukasz.engineerproject.app4train.service.bmi.ShowAllBodyMassIndexService;
 import com.lukasz.engineerproject.app4train.ui.views.UIComponentBuilder;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
@@ -23,8 +23,8 @@ import com.vaadin.ui.themes.ValoTheme;
 @org.springframework.stereotype.Component
 public class ShowAllCalculatedBodyMassIndexLayoutFactory implements UIComponentBuilder {
 
-	private List<BodyMassIndex> bodyMassIndex;
-	private BeanItemContainer<BodyMassIndex> container;
+	private List<BodyMassIndexEntity> bodyMassIndexEntities;
+	private BeanItemContainer<BodyMassIndexEntity> container;
 	private Button buttonForWindow;
 	private Embedded tableBMI;
 
@@ -35,7 +35,7 @@ public class ShowAllCalculatedBodyMassIndexLayoutFactory implements UIComponentB
 		public ShowBodyMassIndexLayout init() {
 
 			setMargin(true);
-			container = new BeanItemContainer<BodyMassIndex>(BodyMassIndex.class, bodyMassIndex);
+			container = new BeanItemContainer<BodyMassIndexEntity>(BodyMassIndexEntity.class, bodyMassIndexEntities);
 			bodyMassIndexTable = new Grid(container);
 			bodyMassIndexTable.setColumnOrder("bodyMassIndexResult", "userGrowth", "userWeight", "user");
 			bodyMassIndexTable.getColumn("bodyMassIndexResult").setHeaderCaption("BMI");
@@ -73,15 +73,15 @@ public class ShowAllCalculatedBodyMassIndexLayoutFactory implements UIComponentB
 		}
 
 		public ShowBodyMassIndexLayout load() {
-			bodyMassIndex = showAllBodyMassIndexService.getAllBodyMassIndex();
+			bodyMassIndexEntities = showAllBodyMassIndexService.getAllBodyMassIndex();
 			return this;
 		}
 	}
 
 	public void refreshTables() {
-		bodyMassIndex = showAllBodyMassIndexService.getAllBodyMassIndex();
+		bodyMassIndexEntities = showAllBodyMassIndexService.getAllBodyMassIndex();
 		container.removeAllItems();
-		container.addAll(bodyMassIndex);
+		container.addAll(bodyMassIndexEntities);
 	}
 
 	@Autowired

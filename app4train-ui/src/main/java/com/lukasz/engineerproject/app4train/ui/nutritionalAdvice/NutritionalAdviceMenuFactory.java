@@ -1,7 +1,5 @@
 package com.lukasz.engineerproject.app4train.ui.nutritionalAdvice;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.lukasz.engineerproject.app4train.ui.views.UIComponentBuilder;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
@@ -9,46 +7,70 @@ import com.vaadin.ui.VerticalLayout;
 @org.springframework.stereotype.Component
 public class NutritionalAdviceMenuFactory implements UIComponentBuilder {
 
-	@Autowired
-	private NutritionalAdviceOneContentMenuLayoutFactory nutritionalAdviceOneContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceTwoContentMenuLayoutFactory nutritionalAdviceTwoContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceThreeContentMenuLayoutFactory nutritionalAdviceThreeContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceFourContentMenuLayoutFactory nutritionalAdviceFourContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceFiveContentMenuLayoutFactory nutritionalAdviceFiveContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceSixContentMenuLayoutFactory nutritionalAdviceSixContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceSevenContentMenuLayoutFactory nutritionalAdviceSevenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceEightContentMenuLayoutFactory nutritionalAdviceEightContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceNineContentMenuLayoutFactory nutritionalAdviceNineContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceTenContentMenuLayoutFactory nutritionalAdviceTenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceElevenContentMenuLayoutFactory nutritionalAdviceElevenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceTwelveContentMenuLayoutFactory nutritionalAdviceTwelveContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceThirteenContentMenuLayoutFactory nutritionalAdviceThirteenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceFourteenContentMenuLayoutFactory nutritionalAdviceFourteenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceFifteenContentMenuLayoutFactory nutritionalAdviceFifteenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceSixteenContentMenuLayoutFactory nutritionalAdviceSixteenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceSeventeenContentMenuLayoutFactory nutritionalAdviceSeventeenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceEighteenContentMenuLayoutFactory nutritionalAdviceEighteenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceNineteenContentMenuLayoutFactory nutritionalAdviceNineteenContentMenuLayoutFactory;
-	@Autowired
-	private NutritionalAdviceTwentyContentMenuLayoutFactory nutritionalAdviceTwentyContentMenuLayoutFactory;
+
+	private final NutritionalAdviceOneContentMenuLayoutFactory nutritionalAdviceOneContentMenuLayoutFactory;
+	private final NutritionalAdviceTwoContentMenuLayoutFactory nutritionalAdviceTwoContentMenuLayoutFactory;
+	private final NutritionalAdviceThreeContentMenuLayoutFactory nutritionalAdviceThreeContentMenuLayoutFactory;
+	private final NutritionalAdviceFourContentMenuLayoutFactory nutritionalAdviceFourContentMenuLayoutFactory;
+	private final NutritionalAdviceFiveContentMenuLayoutFactory nutritionalAdviceFiveContentMenuLayoutFactory;
+	private final NutritionalAdviceSixContentMenuLayoutFactory nutritionalAdviceSixContentMenuLayoutFactory;
+	private final NutritionalAdviceSevenContentMenuLayoutFactory nutritionalAdviceSevenContentMenuLayoutFactory;
+	private final NutritionalAdviceEightContentMenuLayoutFactory nutritionalAdviceEightContentMenuLayoutFactory;
+	private final NutritionalAdviceNineContentMenuLayoutFactory nutritionalAdviceNineContentMenuLayoutFactory;
+	private final NutritionalAdviceTenContentMenuLayoutFactory nutritionalAdviceTenContentMenuLayoutFactory;
+	private final NutritionalAdviceElevenContentMenuLayoutFactory nutritionalAdviceElevenContentMenuLayoutFactory;
+	private final NutritionalAdviceTwelveContentMenuLayoutFactory nutritionalAdviceTwelveContentMenuLayoutFactory;
+	private final NutritionalAdviceThirteenContentMenuLayoutFactory nutritionalAdviceThirteenContentMenuLayoutFactory;
+	private final NutritionalAdviceFourteenContentMenuLayoutFactory nutritionalAdviceFourteenContentMenuLayoutFactory;
+	private final NutritionalAdviceFifteenContentMenuLayoutFactory nutritionalAdviceFifteenContentMenuLayoutFactory;
+	private final NutritionalAdviceSixteenContentMenuLayoutFactory nutritionalAdviceSixteenContentMenuLayoutFactory;
+	private final NutritionalAdviceSeventeenContentMenuLayoutFactory nutritionalAdviceSeventeenContentMenuLayoutFactory;
+	private final NutritionalAdviceEighteenContentMenuLayoutFactory nutritionalAdviceEighteenContentMenuLayoutFactory;
+	private final NutritionalAdviceNineteenContentMenuLayoutFactory nutritionalAdviceNineteenContentMenuLayoutFactory;
+	private final NutritionalAdviceTwentyContentMenuLayoutFactory nutritionalAdviceTwentyContentMenuLayoutFactory;
+
+	public NutritionalAdviceMenuFactory(NutritionalAdviceOneContentMenuLayoutFactory nutritionalAdviceOneContentMenuLayoutFactory,
+										NutritionalAdviceTwoContentMenuLayoutFactory nutritionalAdviceTwoContentMenuLayoutFactory,
+										NutritionalAdviceThreeContentMenuLayoutFactory nutritionalAdviceThreeContentMenuLayoutFactory,
+										NutritionalAdviceFourContentMenuLayoutFactory nutritionalAdviceFourContentMenuLayoutFactory,
+										NutritionalAdviceFiveContentMenuLayoutFactory nutritionalAdviceFiveContentMenuLayoutFactory,
+										NutritionalAdviceSixContentMenuLayoutFactory nutritionalAdviceSixContentMenuLayoutFactory,
+										NutritionalAdviceSevenContentMenuLayoutFactory nutritionalAdviceSevenContentMenuLayoutFactory,
+										NutritionalAdviceEightContentMenuLayoutFactory nutritionalAdviceEightContentMenuLayoutFactory,
+										NutritionalAdviceNineContentMenuLayoutFactory nutritionalAdviceNineContentMenuLayoutFactory,
+										NutritionalAdviceTenContentMenuLayoutFactory nutritionalAdviceTenContentMenuLayoutFactory,
+										NutritionalAdviceElevenContentMenuLayoutFactory nutritionalAdviceElevenContentMenuLayoutFactory,
+										NutritionalAdviceTwelveContentMenuLayoutFactory nutritionalAdviceTwelveContentMenuLayoutFactory,
+										NutritionalAdviceThirteenContentMenuLayoutFactory nutritionalAdviceThirteenContentMenuLayoutFactory,
+										NutritionalAdviceFourteenContentMenuLayoutFactory nutritionalAdviceFourteenContentMenuLayoutFactory,
+										NutritionalAdviceFifteenContentMenuLayoutFactory nutritionalAdviceFifteenContentMenuLayoutFactory,
+										NutritionalAdviceSixteenContentMenuLayoutFactory nutritionalAdviceSixteenContentMenuLayoutFactory,
+										NutritionalAdviceSeventeenContentMenuLayoutFactory nutritionalAdviceSeventeenContentMenuLayoutFactory,
+										NutritionalAdviceEighteenContentMenuLayoutFactory nutritionalAdviceEighteenContentMenuLayoutFactory,
+										NutritionalAdviceNineteenContentMenuLayoutFactory nutritionalAdviceNineteenContentMenuLayoutFactory,
+										NutritionalAdviceTwentyContentMenuLayoutFactory nutritionalAdviceTwentyContentMenuLayoutFactory
+	) {
+		this.nutritionalAdviceOneContentMenuLayoutFactory = nutritionalAdviceOneContentMenuLayoutFactory;
+		this.nutritionalAdviceTwoContentMenuLayoutFactory = nutritionalAdviceTwoContentMenuLayoutFactory;
+		this.nutritionalAdviceThreeContentMenuLayoutFactory = nutritionalAdviceThreeContentMenuLayoutFactory;
+		this.nutritionalAdviceFourContentMenuLayoutFactory = nutritionalAdviceFourContentMenuLayoutFactory;
+		this.nutritionalAdviceFiveContentMenuLayoutFactory = nutritionalAdviceFiveContentMenuLayoutFactory;
+		this.nutritionalAdviceSixContentMenuLayoutFactory = nutritionalAdviceSixContentMenuLayoutFactory;
+		this.nutritionalAdviceSevenContentMenuLayoutFactory = nutritionalAdviceSevenContentMenuLayoutFactory;
+		this.nutritionalAdviceEightContentMenuLayoutFactory = nutritionalAdviceEightContentMenuLayoutFactory;
+		this.nutritionalAdviceNineContentMenuLayoutFactory = nutritionalAdviceNineContentMenuLayoutFactory;
+		this.nutritionalAdviceTenContentMenuLayoutFactory = nutritionalAdviceTenContentMenuLayoutFactory;
+		this.nutritionalAdviceElevenContentMenuLayoutFactory = nutritionalAdviceElevenContentMenuLayoutFactory;
+		this.nutritionalAdviceTwelveContentMenuLayoutFactory = nutritionalAdviceTwelveContentMenuLayoutFactory;
+		this.nutritionalAdviceThirteenContentMenuLayoutFactory = nutritionalAdviceThirteenContentMenuLayoutFactory;
+		this.nutritionalAdviceFourteenContentMenuLayoutFactory = nutritionalAdviceFourteenContentMenuLayoutFactory;
+		this.nutritionalAdviceFifteenContentMenuLayoutFactory = nutritionalAdviceFifteenContentMenuLayoutFactory;
+		this.nutritionalAdviceSixteenContentMenuLayoutFactory = nutritionalAdviceSixteenContentMenuLayoutFactory;
+		this.nutritionalAdviceSeventeenContentMenuLayoutFactory = nutritionalAdviceSeventeenContentMenuLayoutFactory;
+		this.nutritionalAdviceEighteenContentMenuLayoutFactory = nutritionalAdviceEighteenContentMenuLayoutFactory;
+		this.nutritionalAdviceNineteenContentMenuLayoutFactory = nutritionalAdviceNineteenContentMenuLayoutFactory;
+		this.nutritionalAdviceTwentyContentMenuLayoutFactory = nutritionalAdviceTwentyContentMenuLayoutFactory;
+	}
 
 	private class ArticlesMenu extends VerticalLayout {
 
@@ -56,35 +78,28 @@ public class NutritionalAdviceMenuFactory implements UIComponentBuilder {
 
 		public ArticlesMenu init() {
 			layoutForTopics = new VerticalLayout();
-			Component componentForArticleOne = nutritionalAdviceOneContentMenuLayoutFactory.createComponent();
-			Component componentForArticleTwo = nutritionalAdviceTwoContentMenuLayoutFactory.createComponent();
-			Component componentForArticleThree = nutritionalAdviceThreeContentMenuLayoutFactory.createComponent();
-			Component componentForArticleFour = nutritionalAdviceFourContentMenuLayoutFactory.createComponent();
-			Component componentForArticleFive = nutritionalAdviceFiveContentMenuLayoutFactory.createComponent();
-			Component componentForArticleSix = nutritionalAdviceSixContentMenuLayoutFactory.createComponent();
-			Component componentForArticleSeven = nutritionalAdviceSevenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleEight = nutritionalAdviceEightContentMenuLayoutFactory.createComponent();
-			Component componentForArticleNine = nutritionalAdviceNineContentMenuLayoutFactory.createComponent();
-			Component componentForArticleTen = nutritionalAdviceTenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleEleven = nutritionalAdviceElevenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleTwelve = nutritionalAdviceTwelveContentMenuLayoutFactory.createComponent();
-			Component componentForArticleThirteen = nutritionalAdviceThirteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleFourteen = nutritionalAdviceFourteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleFifteen = nutritionalAdviceFifteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleSixteen = nutritionalAdviceSixteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleSeventeen = nutritionalAdviceSeventeenContentMenuLayoutFactory
-					.createComponent();
-			Component componentForArticleEighteen = nutritionalAdviceEighteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleNineteen = nutritionalAdviceNineteenContentMenuLayoutFactory.createComponent();
-			Component componentForArticleTwenty = nutritionalAdviceTwentyContentMenuLayoutFactory.createComponent();
 
-			layoutForTopics.addComponents(componentForArticleOne, componentForArticleTwo, componentForArticleThree,
-					componentForArticleFour, componentForArticleFive, componentForArticleSix, componentForArticleSeven,
-					componentForArticleEight, componentForArticleNine, componentForArticleTen,
-					componentForArticleEleven, componentForArticleTwelve, componentForArticleThirteen,
-					componentForArticleFourteen, componentForArticleFifteen, componentForArticleSixteen,
-					componentForArticleSeventeen, componentForArticleEighteen, componentForArticleNineteen,
-					componentForArticleTwenty);
+			layoutForTopics.addComponents(
+					nutritionalAdviceOneContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceTwoContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceThreeContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceFourContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceFiveContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceSixContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceSevenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceEightContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceNineContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceTenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceElevenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceTwelveContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceThirteenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceFourteenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceFifteenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceSixteenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceSeventeenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceEighteenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceNineteenContentMenuLayoutFactory.createComponent(),
+					nutritionalAdviceTwentyContentMenuLayoutFactory.createComponent());
 			return this;
 		}
 

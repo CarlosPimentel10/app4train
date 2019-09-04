@@ -1,6 +1,5 @@
 package com.lukasz.engineerproject.app4train.ui.bodyTypesExplanation;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import com.lukasz.engineerproject.app4train.ui.commons.App4TrainMainUI;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
 import com.vaadin.navigator.View;
@@ -13,21 +12,23 @@ import com.vaadin.ui.VerticalLayout;
 @SpringView(name = BodyTypeExplanationMenuLayoutFactory.NAME, ui = App4TrainMainUI.class)
 public class BodyTypeExplanationMenuLayoutFactory extends VerticalLayout implements View {
 	public static final String NAME = "sprawdütypybudowycia≥a";
-	private TabSheet tabSheet;
 
-	@Autowired
-	private BodyTypeExplanationForEctomorphicMenuLayoutFactory bodyTypeExplanationForEctomorphicMenuLayoutFactory;
+	private final BodyTypeExplanationForEctomorphicMenuLayoutFactory bodyTypeExplanationForEctomorphicMenuLayoutFactory;
+	private final BodyTypeExplanationForEndomorphicMenuLayoutFactory bodyTypeExplanationForEndomorphicMenuLayoutFactory;
+	private final BodyTypeExplanationForMesomorphicMenuLayoutFactory bodyTypeExplanationForMesomorphicMenuLayoutFactory;
 
-	@Autowired
-	private BodyTypeExplanationForEndomorphicMenuLayoutFactory bodyTypeExplanationForEndomorphicMenuLayoutFactory;
-
-	@Autowired
-	private BodyTypeExplanationForMesomorphicMenuLayoutFactory bodyTypeExplanationForMesomorphicMenuLayoutFactory;
+	public BodyTypeExplanationMenuLayoutFactory(BodyTypeExplanationForEctomorphicMenuLayoutFactory bodyTypeExplanationForEctomorphicMenuLayoutFactory,
+												BodyTypeExplanationForEndomorphicMenuLayoutFactory bodyTypeExplanationForEndomorphicMenuLayoutFactory,
+												BodyTypeExplanationForMesomorphicMenuLayoutFactory bodyTypeExplanationForMesomorphicMenuLayoutFactory) {
+		this.bodyTypeExplanationForEctomorphicMenuLayoutFactory = bodyTypeExplanationForEctomorphicMenuLayoutFactory;
+		this.bodyTypeExplanationForEndomorphicMenuLayoutFactory = bodyTypeExplanationForEndomorphicMenuLayoutFactory;
+		this.bodyTypeExplanationForMesomorphicMenuLayoutFactory = bodyTypeExplanationForMesomorphicMenuLayoutFactory;
+	}
 
 	private void addLayout() {
 
 		setMargin(false);
-		tabSheet = new TabSheet();
+		TabSheet tabSheet = new TabSheet();
 		tabSheet.setWidth("100%");
 
 		Component BodyTypeExplanationForEctomorphicTab = bodyTypeExplanationForEctomorphicMenuLayoutFactory

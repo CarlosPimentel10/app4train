@@ -1,6 +1,5 @@
 package com.lukasz.engineerproject.app4train.ui.login;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
@@ -10,10 +9,13 @@ import com.vaadin.ui.UI;
 @Theme("valo")
 public class LoginUI extends UI {
 
-	public static final String PATH = "/login";
+	static final String PATH = "/login";
 
-	@Autowired
-	LoginFormFactory loginFormFactory;
+	private final LoginFormFactory loginFormFactory;
+
+	public LoginUI(LoginFormFactory loginFormFactory) {
+		this.loginFormFactory = loginFormFactory;
+	}
 
 	@Override
 	protected void init(VaadinRequest request) {

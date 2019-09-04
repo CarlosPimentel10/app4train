@@ -1,7 +1,5 @@
 package com.lukasz.engineerproject.app4train.ui.bodyMassIndex;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.lukasz.engineerproject.app4train.ui.commons.App4TrainMainUI;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
 import com.vaadin.navigator.View;
@@ -17,18 +15,19 @@ import com.vaadin.ui.TabSheet.Tab;
 public class BodyMassIndexLayoutFactory extends VerticalLayout implements View, BodyMassIndexSavedListener {
 
 	public static final String NAME = "obliczbmi";
-	private TabSheet tabSheet;
 
-	@Autowired
-	private CalculateBodyMassIndexLayoutFactory addBodyMassIndexFactory;
+	private final CalculateBodyMassIndexLayoutFactory addBodyMassIndexFactory;
+	private final ShowAllCalculatedBodyMassIndexLayoutFactory showBodyMassIndexFactory;
 
-	@Autowired
-	private ShowAllCalculatedBodyMassIndexLayoutFactory showBodyMassIndexFactory;
+	public BodyMassIndexLayoutFactory(CalculateBodyMassIndexLayoutFactory addBodyMassIndexFactory, ShowAllCalculatedBodyMassIndexLayoutFactory showBodyMassIndexFactory) {
+		this.addBodyMassIndexFactory = addBodyMassIndexFactory;
+		this.showBodyMassIndexFactory = showBodyMassIndexFactory;
+	}
 
 	private void addLayout() {
 
 		setMargin(false);
-		tabSheet = new TabSheet();
+		TabSheet tabSheet = new TabSheet();
 		tabSheet.setWidth("100%");
 
 		Component addBodyMassIndexTab = addBodyMassIndexFactory.createComponent(this);
@@ -45,7 +44,6 @@ public class BodyMassIndexLayoutFactory extends VerticalLayout implements View, 
 
 	public void bodyMassIndexSaved() {
 		showBodyMassIndexFactory.refreshTables();
-
 	}
 
 	public void enter(ViewChangeEvent event) {

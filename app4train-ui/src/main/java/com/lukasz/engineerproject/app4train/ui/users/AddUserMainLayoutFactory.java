@@ -1,8 +1,7 @@
 package com.lukasz.engineerproject.app4train.ui.users;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import com.lukasz.engineerproject.app4train.model.entity.User;
-import com.lukasz.engineerproject.app4train.service.addUser.AddUserService;
+import com.lukasz.engineerproject.app4train.model.domain.UserEntity;
+import com.lukasz.engineerproject.app4train.service.user.AddUserService;
 import com.lukasz.engineerproject.app4train.utils.Gender;
 import com.lukasz.engineerproject.app4train.utils.NotificationMessages;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
@@ -27,6 +26,12 @@ import com.vaadin.ui.themes.ValoTheme;
 @org.springframework.stereotype.Component
 public class AddUserMainLayoutFactory {
 
+	private final AddUserService addUserService;
+
+	public AddUserMainLayoutFactory(AddUserService addUserService) {
+		this.addUserService = addUserService;
+	}
+
 	private class AddUserMainLayout extends VerticalLayout implements ClickListener {
 
 		private static final long serialVersionUID = 1L;
@@ -44,39 +49,42 @@ public class AddUserMainLayoutFactory {
 
 		private UserSavedListener userSavedListener;
 
-		private BeanFieldGroup<User> fieldGroup;
-		private User user;
+		private BeanFieldGroup<UserEntity> fieldGroup;
+		private UserEntity userEntity;
 
-		public AddUserMainLayout(UserSavedListener userSavedListener) {
+		AddUserMainLayout(UserSavedListener userSavedListener) {
 			this.userSavedListener = userSavedListener;
-			this.user = new User();
+			this.userEntity = new UserEntity();
 		}
 
 		public AddUserMainLayout init() {
 
-			fieldGroup = new BeanFieldGroup<User>(User.class);
+			fieldGroup = new BeanFieldGroup<UserEntity>(UserEntity.class);
 
-			firstName = new TextField(StringUtils.FIRST_NAME.getString());
-			lastName = new TextField(StringUtils.LAST_NAME.getString());
-			age = new TextField(StringUtils.AGE.getString());
-			gender = new ComboBox(StringUtils.GENDER.getString());
+			prepareFields();
 
-			firstName.setNullRepresentation("");
-			lastName.setNullRepresentation("");
-			age.setNullRepresentation("");
+			prepareButtons();
 
-			saveButton = new Button(StringUtils.SAVE.getString());
-			saveButton.setIcon(FontAwesome.SAVE);
-			saveButton.addStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT);
-			clearButton = new Button(StringUtils.CANCEL.getString());
-			clearButton.setIcon(FontAwesome.TIMES);
-			clearButton.addStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT);
-			saveButton.addClickListener(this);
-			clearButton.addClickListener(this);
+			prepareLongDescription();
 
-			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-			clearButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+			prepareLabelWithBasicDescription();
 
+			prepareComboboxForGender();
+
+			return this;
+		}
+
+		private void prepareComboboxForGender() {
+			gender.addItem(Gender.MALE.getString());
+			gender.addItem(Gender.FEMALE.getString());
+		}
+
+		private void prepareLabelWithBasicDescription() {
+			labelForUserForm = new Label("<b>Formularz pozwalaj¹cy stworzyæ u¿ytkownika<br><b>", ContentMode.HTML);
+			labelForUserForm.setStyleName(ValoTheme.TEXTAREA_ALIGN_CENTER);
+		}
+
+		private void prepareLongDescription() {
 			explanationOfThisPart1 = new Label(
 					"<b>Stwórz przynajmniej jednego u¿ytkownika poprzez wype³nienie wymaganych pól formularza umieszczonego poni¿ej. Pozwoli Ci to na obliczenie:<b><br><br>",
 					ContentMode.HTML);
@@ -89,24 +97,41 @@ public class AddUserMainLayoutFactory {
 					"Masz mo¿liwoœæ stworzenia tylu u¿ytkowników z ró¿nymi parametrami na ilu masz ochotê. Daje to mo¿liwoœæ sprawdzenia, jakie dany u¿ytkownik osi¹gn¹³ wyniki oraz porównania ich w stosunku to wyników osi¹gniêtych przez innych stworzonych u¿ytkowników. Tak wiêc najpierw tworzony jest przynajmniej jeden u¿ytkownik a nastêpnie w zale¿noœci od tego jaki wskaŸnik (BMR, BAI, BMR) chcemy obliczyæ, musimy przejœæ od odpowiadniej zak³adni w menu celem dokonania obliczeñ.<br><br>",
 					ContentMode.HTML);
 			explanationOfThisPart3.setStyleName(ValoTheme.TEXTAREA_ALIGN_CENTER);
-			
+
 			explanationOfThisPart4 = new Label(
 					"Je¿eli chcesz wiêcej dowiedzieæ siê o w/w wskaŸnikach zanim przejdziesz do stworzenia swojego u¿ytkownika, przejdŸ do odpowiedniej zak³adki umieszczonej w menu.<br><br>",
 					ContentMode.HTML);
 			explanationOfThisPart4.setStyleName(ValoTheme.TEXTAREA_ALIGN_CENTER);
-
-			labelForUserForm = new Label("<b>Formularz pozwalaj¹cy stworzyæ u¿ytkownika<br><b>", ContentMode.HTML);
-			labelForUserForm.setStyleName(ValoTheme.TEXTAREA_ALIGN_CENTER);
-
-			gender.addItem(Gender.MALE.getString());
-			gender.addItem(Gender.FEMALE.getString());
-
-			return this;
 		}
 
-		public AddUserMainLayout bind() {
+		private void prepareButtons() {
+			saveButton = new Button(StringUtils.SAVE.getString());
+			saveButton.setIcon(FontAwesome.SAVE);
+			saveButton.addStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT);
+			clearButton = new Button(StringUtils.CANCEL.getString());
+			clearButton.setIcon(FontAwesome.TIMES);
+			clearButton.addStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT);
+			saveButton.addClickListener(this);
+			clearButton.addClickListener(this);
+
+			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+			clearButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		}
+
+		private void prepareFields() {
+			firstName = new TextField(StringUtils.FIRST_NAME.getString());
+			lastName = new TextField(StringUtils.LAST_NAME.getString());
+			age = new TextField(StringUtils.AGE.getString());
+			gender = new ComboBox(StringUtils.GENDER.getString());
+
+			firstName.setNullRepresentation("");
+			lastName.setNullRepresentation("");
+			age.setNullRepresentation("");
+		}
+
+		AddUserMainLayout bind() {
 			fieldGroup.bindMemberFields(this);
-			fieldGroup.setItemDataSource(user);
+			fieldGroup.setItemDataSource(userEntity);
 			return this;
 		}
 
@@ -128,8 +153,13 @@ public class AddUserMainLayoutFactory {
 
 			age.clear();
 
-			return new VerticalLayout(explanationOfThisPart1, explanationOfThisPart2, explanationOfThisPart3,
-					explanationOfThisPart4, labelForUserForm, layout);
+			return new VerticalLayout(
+					explanationOfThisPart1,
+					explanationOfThisPart2,
+					explanationOfThisPart3,
+					explanationOfThisPart4,
+					labelForUserForm,
+					layout);
 		}
 
 		public void buttonClick(ClickEvent event) {
@@ -156,7 +186,7 @@ public class AddUserMainLayoutFactory {
 				return;
 			}
 
-			addUserService.saveUser(user);
+			addUserService.saveUser(userEntity);
 			userSavedListener.userSaved();
 
 			Notification.show(NotificationMessages.USER_SAVE_SUCCESS_TITLE.getString(),
@@ -166,9 +196,6 @@ public class AddUserMainLayoutFactory {
 		}
 
 	}
-
-	@Autowired
-	private AddUserService addUserService;
 
 	public Component createComponent(UserSavedListener userSavedListener) {
 		return new AddUserMainLayout(userSavedListener).init().bind().layout();

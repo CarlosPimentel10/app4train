@@ -20,7 +20,7 @@ public class SpringBootAppApplication extends SpringBootServletInitializer {
 	
 	public SpringBootAppApplication() {
 	    super();
-	    setRegisterErrorPageFilter(false); // <- this one
+	    setRegisterErrorPageFilter(false);
 	}
 
 	@Override

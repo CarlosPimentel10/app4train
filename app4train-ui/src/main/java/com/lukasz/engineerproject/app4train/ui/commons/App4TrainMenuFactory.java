@@ -137,7 +137,7 @@ public class App4TrainMenuFactory implements UIComponentBuilder {
 			
 			if( selectedItemPath == null ) return;
 			
-			if( selectedItemPath == "Logout" ) return;
+			if(selectedItemPath.equals("Logout")) return;
 			
 			String path = selectedItemPath.toLowerCase().replaceAll("\\s+","");
 			App4TrainNavigator.navigate(path);

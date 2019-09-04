@@ -2,12 +2,11 @@ package com.lukasz.engineerproject.app4train.ui.basicMetabolicRate;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.lukasz.engineerproject.app4train.model.domain.BasicMetabolicRateEntity;
+import com.lukasz.engineerproject.app4train.model.domain.UserEntity;
 
-import com.lukasz.engineerproject.app4train.model.entity.BasicMetabolicRate;
-import com.lukasz.engineerproject.app4train.model.entity.User;
-import com.lukasz.engineerproject.app4train.service.getBasicMetabolicRateResult.GetBasicMetabolicRateResultService;
-import com.lukasz.engineerproject.app4train.service.showUsers.ShowUsersServiceImpl;
+import com.lukasz.engineerproject.app4train.service.bmr.GetBasicMetabolicRateResultService;
+import com.lukasz.engineerproject.app4train.service.user.UserServiceImpl.ShowUsersServiceImpl;
 import com.lukasz.engineerproject.app4train.utils.NotificationMessages;
 import com.lukasz.engineerproject.app4train.utils.StringUtils;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -28,27 +27,37 @@ import com.vaadin.ui.VerticalLayout;
 @org.springframework.stereotype.Component
 public class CalculateBasicMetabolicRateLayoutFactory {
 
+	private final GetBasicMetabolicRateResultService getBasicMetabolicRateResultService;
+	private final ShowUsersServiceImpl showUsersService;
+
+	public CalculateBasicMetabolicRateLayoutFactory(
+			GetBasicMetabolicRateResultService getBasicMetabolicRateResultService,
+			ShowUsersServiceImpl showUsersService) {
+		this.getBasicMetabolicRateResultService = getBasicMetabolicRateResultService;
+		this.showUsersService = showUsersService;
+	}
+
 	private class AddBasicMetabolicRateLayout extends VerticalLayout implements ClickListener {
 
 		private static final long serialVersionUID = 1L;
 		private TextField dryMuscleWeight;
 		private TextField userGrowth;
 		private Button calculateButton;
-		private BeanFieldGroup<BasicMetabolicRate> fieldGroup;
-		private BasicMetabolicRate basicMetabolicRate;
+		private BeanFieldGroup<BasicMetabolicRateEntity> fieldGroup;
+		private BasicMetabolicRateEntity basicMetabolicRateEntity;
 		private ComboBox user;
 		private FormLayout formLayout;
 
 		private BasicMetabolicRateSavedListener basicMetabolicRateSavedListener;
 
-		public AddBasicMetabolicRateLayout(BasicMetabolicRateSavedListener basicMetabolicRateSavedListener) {
+		AddBasicMetabolicRateLayout(BasicMetabolicRateSavedListener basicMetabolicRateSavedListener) {
 			this.basicMetabolicRateSavedListener = basicMetabolicRateSavedListener;
-			this.basicMetabolicRate = new BasicMetabolicRate();
+			this.basicMetabolicRateEntity = new BasicMetabolicRateEntity();
 		}
 
 		public AddBasicMetabolicRateLayout init() {
 
-			fieldGroup = new BeanFieldGroup<BasicMetabolicRate>(BasicMetabolicRate.class);
+			fieldGroup = new BeanFieldGroup<BasicMetabolicRateEntity>(BasicMetabolicRateEntity.class);
 			dryMuscleWeight = new TextField(StringUtils.DRY_MUSCLE_WEIGHT.getString());
 			userGrowth = new TextField(StringUtils.GROWTH.getString());
 			user = new ComboBox(StringUtils.USER.getString());
@@ -66,9 +75,9 @@ public class CalculateBasicMetabolicRateLayoutFactory {
 			return this;
 		}
 
-		public AddBasicMetabolicRateLayout bind() {
+		AddBasicMetabolicRateLayout bind() {
 			fieldGroup.bindMemberFields(this);
-			fieldGroup.setItemDataSource(basicMetabolicRate);
+			fieldGroup.setItemDataSource(basicMetabolicRateEntity);
 
 			return this;
 		}
@@ -115,37 +124,35 @@ public class CalculateBasicMetabolicRateLayoutFactory {
 				return;
 			}
 
-			try {
-				if (basicMetabolicRate.getUser().getGender().equals("Mê¿czyzna")) {
-					getBasicMetabolicRateResultService.saveWhenUserIsMan(basicMetabolicRate,
-							(Integer) basicMetabolicRate.getUser().getAge(),
-							(Double) basicMetabolicRate.getDryMuscleWeight(),
-							(Integer) basicMetabolicRate.getUserGrowth());
-					basicMetabolicRateSavedListener.basicMetabolicRateSaved();
-					Notification.show(NotificationMessages.BMR_SAVE_SUCCESS_TITLE.getString(),
-							NotificationMessages.BMR_SAVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
-					clearFields();
-				} else if (basicMetabolicRate.getUser().getGender().equals("Kobieta")) {
-					getBasicMetabolicRateResultService.saveWhenUserIsWoman(basicMetabolicRate,
-							(Integer) basicMetabolicRate.getUser().getAge(),
-							(Double) basicMetabolicRate.getDryMuscleWeight(),
-							(Integer) basicMetabolicRate.getUserGrowth());
-					basicMetabolicRateSavedListener.basicMetabolicRateSaved();
-					Notification.show(NotificationMessages.BMR_SAVE_SUCCESS_TITLE.getString(),
-							NotificationMessages.BMR_SAVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
-					clearFields();
-				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			} //
+			if (basicMetabolicRateEntity.getUserEntity().getGender().equals("Mê¿czyzna")) {
+				getBasicMetabolicRateResultService.saveWhenUserIsMan(
+						basicMetabolicRateEntity,
+						basicMetabolicRateEntity.getUserEntity().getAge(),
+						basicMetabolicRateEntity.getDryMuscleWeight(),
+						basicMetabolicRateEntity.getUserGrowth());
+				basicMetabolicRateSavedListener.basicMetabolicRateSaved();
 
+				Notification.show(NotificationMessages.BMR_SAVE_SUCCESS_TITLE.getString(),
+						NotificationMessages.BMR_SAVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
+				clearFields();
+			} else if (basicMetabolicRateEntity.getUserEntity().getGender().equals("Kobieta")) {
+				getBasicMetabolicRateResultService.saveWhenUserIsWoman(
+						basicMetabolicRateEntity,
+						basicMetabolicRateEntity.getUserEntity().getAge(),
+						basicMetabolicRateEntity.getDryMuscleWeight(),
+						basicMetabolicRateEntity.getUserGrowth());
+				basicMetabolicRateSavedListener.basicMetabolicRateSaved();
+
+				Notification.show(NotificationMessages.BMR_SAVE_SUCCESS_TITLE.getString(),
+						NotificationMessages.BMR_SAVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
+				clearFields();
+			}
 		}
 
-		public AddBasicMetabolicRateLayout load() {
+		AddBasicMetabolicRateLayout load() {
 
-			List<User> users = showUsersService.getAllUsers();
-			user.addItems(users);
-
+			List<UserEntity> userEntities = showUsersService.getAllUsers();
+			user.addItems(userEntities);
 			return this;
 		}
 	}
@@ -153,12 +160,6 @@ public class CalculateBasicMetabolicRateLayoutFactory {
 	private boolean isOperationValid() {
 		return showUsersService.getAllUsers().size() != 0;
 	}
-
-	@Autowired
-	private GetBasicMetabolicRateResultService getBasicMetabolicRateResultService;
-
-	@Autowired
-	private ShowUsersServiceImpl showUsersService;
 
 	public Component createComponent(BasicMetabolicRateSavedListener basicMetabolicRateSavedListener) {
 		return new AddBasicMetabolicRateLayout(basicMetabolicRateSavedListener).init().load().bind().layout();

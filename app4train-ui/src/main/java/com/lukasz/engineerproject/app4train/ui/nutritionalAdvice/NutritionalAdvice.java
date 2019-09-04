@@ -1,6 +1,5 @@
 package com.lukasz.engineerproject.app4train.ui.nutritionalAdvice;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import com.lukasz.engineerproject.app4train.ui.commons.App4TrainMainUI;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -13,8 +12,11 @@ public class NutritionalAdvice extends VerticalLayout implements View {
 
 	public static final String NAME = "wyœwietlporady¿ywieniowe";
 
-	@Autowired
-	private NutritionalAdviceMenuFactory nutritionalAdviceMenuFactory;
+	private final NutritionalAdviceMenuFactory nutritionalAdviceMenuFactory;
+
+	public NutritionalAdvice(NutritionalAdviceMenuFactory nutritionalAdviceMenuFactory) {
+		this.nutritionalAdviceMenuFactory = nutritionalAdviceMenuFactory;
+	}
 
 	private void addLayout() {
 		setMargin(false);

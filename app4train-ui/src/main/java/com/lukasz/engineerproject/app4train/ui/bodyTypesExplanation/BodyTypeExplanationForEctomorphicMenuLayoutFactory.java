@@ -28,26 +28,38 @@ public class BodyTypeExplanationForEctomorphicMenuLayoutFactory {
 		private Label throughtExplanationOfEctomorphicType;
 		private Label explanationOfEctomorphicType;
 		private FormLayout layoutForMenuComponents;
-		private HorizontalLayout layoutForButtonAndPopup;
 		private Button buttonForPopup;
-		private Panel panel;
 		private Embedded picture;
 
 		public BodyTypeExplanationForEctomorphicMenuLayout init() {
 
 			layoutForMenuComponents = new FormLayout();
 
-			shortExplanationOfEctomorphicType = new Label(
-					"<p><ul><li>niski poziom tkanki t³uszczowej</li><li>szczup³e ramiona</li><li>bardzo szybki metabolizm</li><li>osoba, której bardzo trudno nabraæ masy miêœniowej</li><li>p³aska klatka piersiowa</li></ul></p>",
-					ContentMode.HTML);
+			prepareDescription();
 
-			explanationOfEctomorphicType = new Label("Szczegó³owy opis ektomorfika");
+			preparePicture();
 
-			picture = new Embedded();
-			picture.setSource(new ThemeResource("../../images/ektomorfik.png"));
-			picture.setSizeUndefined();
+			prepareButton();
 
+			buttonAction();
+
+			HorizontalLayout layoutForButtonAndPopup = new HorizontalLayout(buttonForPopup, explanationOfEctomorphicType);
+			layoutForButtonAndPopup.setSpacing(true);
+
+			layoutForMenuComponents.addComponents(shortExplanationOfEctomorphicType, picture, layoutForButtonAndPopup);
+
+			addComponent(layoutForMenuComponents);
+
+			return this;
+		}
+
+		private void prepareButton() {
 			buttonForPopup = new Button();
+			buttonForPopup.setIcon(FontAwesome.SEARCH);
+			buttonForPopup.setStyleName(ValoTheme.BUTTON_SMALL);
+		}
+
+		private void buttonAction() {
 			buttonForPopup.addClickListener(new ClickListener() {
 
 				public void buttonClick(ClickEvent event) {
@@ -69,23 +81,26 @@ public class BodyTypeExplanationForEctomorphicMenuLayoutFactory {
 					UI.getCurrent().addWindow(window);
 				}
 			});
-			buttonForPopup.setIcon(FontAwesome.SEARCH);
-			buttonForPopup.setStyleName(ValoTheme.BUTTON_SMALL);
+		}
 
-			layoutForButtonAndPopup = new HorizontalLayout(buttonForPopup, explanationOfEctomorphicType);
-			layoutForButtonAndPopup.setSpacing(true);
+		private void prepareDescription() {
+			shortExplanationOfEctomorphicType = new Label(
+					"<p><ul><li>niski poziom tkanki t³uszczowej</li><li>szczup³e ramiona</li><li>bardzo szybki metabolizm</li><li>osoba, której bardzo trudno nabraæ masy miêœniowej</li><li>p³aska klatka piersiowa</li></ul></p>",
+					ContentMode.HTML);
 
-			layoutForMenuComponents.addComponents(shortExplanationOfEctomorphicType, picture, layoutForButtonAndPopup);
+			explanationOfEctomorphicType = new Label("Szczegó³owy opis ektomorfika");
+		}
 
-			addComponent(layoutForMenuComponents);
-
-			return this;
+		private void preparePicture() {
+			picture = new Embedded();
+			picture.setSource(new ThemeResource("../../images/ektomorfik.png"));
+			picture.setSizeUndefined();
 		}
 
 		public Component layout() {
 
 			setMargin(true);
-			panel = new Panel("Typ budowy cia³a - EKTOMORFIK");
+			Panel panel = new Panel("Typ budowy cia³a - EKTOMORFIK");
 			panel.setWidth("100%");
 			panel.setContent(layoutForMenuComponents);
 
